@@ -177,17 +177,19 @@ export function CategoryDetailScreen({
         <span className="mr-2 font-sans text-2xs font-semibold text-ash">
           Diğer Kategoriler:
         </span>
-        {CALCULATOR_CATEGORIES.filter((c) => c.id !== category.id).map((cat) => (
-          <Button
-            key={cat.id}
-            asChild
-            variant="outline"
-            size="sm"
-            className="font-sans text-compact font-semibold"
-          >
-            <Link href={`/${cat.id}`}>{cat.shortTitle}</Link>
-          </Button>
-        ))}
+        {CALCULATOR_CATEGORIES.filter((c) => c.id !== category.id).map(
+          (cat) => (
+            <Button
+              key={cat.id}
+              asChild
+              variant="outline"
+              size="sm"
+              className="font-sans text-compact font-semibold"
+            >
+              <Link href={`/${cat.id}`}>{cat.shortTitle}</Link>
+            </Button>
+          ),
+        )}
       </div>
     </div>
   );
