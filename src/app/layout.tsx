@@ -55,11 +55,7 @@ export default async function RootLayout({
   const fontVars = `${plusJakartaSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`;
 
   return (
-    <html
-      lang={locale}
-      className={`dark ${fontVars}`}
-      suppressHydrationWarning
-    >
+    <html lang={locale} className={fontVars} suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans text-body-sm font-normal text-foreground antialiased">
         <ClientLocaleProvider initialLocale={locale}>
           <LocaleHtmlSync />

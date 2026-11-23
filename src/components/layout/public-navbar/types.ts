@@ -20,4 +20,5 @@ export interface PublicNavbarProps {
   brandTitle: string;
   brandSubtitle: string;
   brandLogo: string;
+  groups?: NavCategoryGroup[];
 }

@@ -22,6 +22,7 @@ import {
 } from '@/components/forms';
 import { useMounted } from '@/hooks/use-mounted';
 import { useGamificationStore } from '@/stores/use-gamification-store';
+import { getCategoryTheme } from '../registry/category-theme';
 import {
   CalculatorDefinition,
   CalculatorExecutionResult,
@@ -44,6 +45,7 @@ export function DynamicCalculatorCard({
   const favoriteIds = useGamificationStore((s) => s.favoriteIds);
   const toggleFavorite = useGamificationStore((s) => s.toggleFavorite);
   const isFavorite = mounted && favoriteIds.includes(calculator.id);
+  const theme = getCategoryTheme(calculator.categoryId);
 
   const defaultValues = useMemo(() => {
     const acc: CalculatorFormRawValues = {};
@@ -93,7 +95,10 @@ export function DynamicCalculatorCard({
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
       <div className="lg:col-span-7">
-        <Card className="relative overflow-hidden border-gunmetal/70 bg-obsidian/95 shadow-md backdrop-blur-md">
+        <Card
+          className={`relative overflow-hidden ${theme.border} bg-obsidian/95 shadow-lg backdrop-blur-md`}
+        >
+          <div className={`h-1.5 w-full ${theme.topBar}`} />
           <CardHeader>
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="space-y-1">
@@ -126,9 +131,7 @@ export function DynamicCalculatorCard({
                     variant="outline"
                     className="font-sans text-micro font-semibold"
                   >
-                    <Link
-                      href={`/${calculator.categoryId}/${calculator.id}`}
-                    >
+                    <Link href={`/${calculator.categoryId}/${calculator.id}`}>
                       Özel Sayfa
                       <ExternalLink className="ml-1.5 h-3 w-3" />
                     </Link>
@@ -137,7 +140,9 @@ export function DynamicCalculatorCard({
               </div>
             </div>
             {calculator.legalNote && (
-              <p className="mt-1 font-mono text-2xs font-medium italic text-hesaplamalarim-blue">
+              <p
+                className={`mt-1.5 inline-block rounded-md ${theme.bgSoft} px-2.5 py-1 font-sans text-2xs font-medium ${theme.text}`}
+              >
                 {calculator.legalNote}
               </p>
             )}
@@ -201,7 +206,7 @@ export function DynamicCalculatorCard({
 
                 <Button
                   type="submit"
-                  className="w-full bg-hesaplamalarim-blue font-sans text-body-sm font-bold text-primary-foreground shadow-md hover:bg-hesaplamalarim-blue/90"
+                  className={`w-full ${theme.buttonBg} font-sans text-body-sm font-bold text-primary-foreground shadow-md transition-transform active:scale-[0.99]`}
                 >
                   <Zap className="mr-1.5 h-4 w-4" />
                   Hesapla ve +25 XP Kazan

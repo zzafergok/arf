@@ -12,12 +12,13 @@ export function PublicNavbar({
   brandTitle,
   brandSubtitle,
   brandLogo,
+  groups: initialGroups,
 }: PublicNavbarProps) {
-  const groups = getNavCategoryGroups();
+  const groups = initialGroups ?? getNavCategoryGroups();
 
   return (
     <header className="sticky top-0 z-40 border-b border-gunmetal/70 bg-obsidian/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gunmetal/70 bg-white p-0.5 shadow-sm">
             <Image
@@ -52,4 +53,3 @@ export function PublicNavbar({
     </header>
   );
 }
-

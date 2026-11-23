@@ -20,6 +20,7 @@ import {
   ALL_CALCULATORS,
   CALCULATOR_CATEGORIES,
   CalculatorDefinition,
+  getCategoryTheme,
 } from '../registry';
 import { DynamicCalculatorCard } from './dynamic-calculator-card';
 import { AnimatedGeometricBackdrop, GamificationHud } from './visuals';
@@ -43,8 +44,7 @@ export function CalculatorDetailScreen({
     initialCalculator ??
     ALL_CALCULATORS.find(
       (c) =>
-        c.id === calculatorId &&
-        (!categoryId || c.categoryId === categoryId),
+        c.id === calculatorId && (!categoryId || c.categoryId === categoryId),
     ) ??
     ALL_CALCULATORS.find((c) => c.id === calculatorId) ??
     ALL_CALCULATORS[0];
@@ -52,6 +52,7 @@ export function CalculatorDetailScreen({
   const categoryMeta =
     CALCULATOR_CATEGORIES.find((c) => c.id === calculator.categoryId) ??
     CALCULATOR_CATEGORIES[0];
+  const theme = getCategoryTheme(calculator.categoryId);
 
   const siblingCalculators = ALL_CALCULATORS.filter(
     (c) => c.categoryId === calculator.categoryId && c.id !== calculator.id,
@@ -66,7 +67,7 @@ export function CalculatorDetailScreen({
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+    <div className="relative mx-auto w-full max-w-[1600px] space-y-8 px-4 py-6 sm:px-6 lg:px-8">
       <AnimatedGeometricBackdrop />
 
       {/* 1. Üst Navigasyon & Paylaşım Çubuğu */}
@@ -83,7 +84,7 @@ export function CalculatorDetailScreen({
             {categoryMeta.shortTitle}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
-          <span className="font-bold italic text-hesaplamalarim-blue">
+          <span className={`font-semibold ${theme.text}`}>
             {calculator.shortTitle}
           </span>
         </div>
@@ -126,7 +127,7 @@ export function CalculatorDetailScreen({
             <h2 className="font-display text-heading-sm font-bold text-titanium">
               {categoryMeta.shortTitle} Kategorisindeki Diğer Görevler
             </h2>
-            <p className="font-sans text-caption font-normal italic text-ash">
+            <p className="font-sans text-caption font-normal text-ash">
               Yeni araçları keşfederek +75 XP Kaşif Bonusu kazanabilirsin.
             </p>
           </div>
@@ -136,9 +137,7 @@ export function CalculatorDetailScreen({
             size="sm"
             className="font-sans text-compact font-semibold"
           >
-            <Link href={`/${categoryMeta.id}`}>
-              Kategoriyi Gör
-            </Link>
+            <Link href={`/${categoryMeta.id}`}>Kategoriyi Gör</Link>
           </Button>
         </div>
 
@@ -155,13 +154,15 @@ export function CalculatorDetailScreen({
                   href={`/${item.categoryId}/${item.id}`}
                   className="block h-full"
                 >
-                  <Card className="h-full border-gunmetal/70 bg-obsidian/90 transition-colors hover:border-hesaplamalarim-blue/55">
+                  <Card
+                    className={`h-full border-gunmetal/70 bg-obsidian/90 transition-colors ${theme.hoverBorder}`}
+                  >
                     <CardContent className="flex h-full flex-col justify-between p-4">
                       <div>
                         <div className="mb-2 flex items-center justify-between gap-2">
                           <Badge
                             variant={isDiscovered ? 'default' : 'outline'}
-                            className="font-mono text-micro font-semibold italic"
+                            className="font-mono text-micro font-semibold"
                           >
                             {isDiscovered ? (
                               <span className="inline-flex items-center gap-1">
@@ -169,7 +170,9 @@ export function CalculatorDetailScreen({
                                 Keşfedildi
                               </span>
                             ) : (
-                              <span className="inline-flex items-center gap-1 text-hesaplamalarim-blue">
+                              <span
+                                className={`inline-flex items-center gap-1 ${theme.text}`}
+                              >
                                 <Compass className="h-3 w-3" />
                                 +75 XP Keşif
                               </span>
@@ -183,7 +186,9 @@ export function CalculatorDetailScreen({
                           {item.description}
                         </p>
                       </div>
-                      <div className="mt-3 font-mono text-2xs font-bold italic text-hesaplamalarim-blue">
+                      <div
+                        className={`mt-3 font-mono text-2xs font-bold ${theme.text}`}
+                      >
                         Hesaplama Sayfasına Git →
                       </div>
                     </CardContent>

@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/core/dropdown-menu';
 import { Link } from '@/components/core/link';
+import { getCategoryTheme } from '@/features/calculators/registry';
 import { cn } from '@/lib/utils';
 import { getCategoryIcon } from './constants';
 import type { NavCategoryGroup } from './types';
@@ -25,10 +26,16 @@ export function DesktopNav({ groups }: DesktopNavProps) {
   const [open, setOpen] = useState(false);
 
   // 3 sütunlu dengeli dağılım
-  const col1 = groups.filter((g) => ['finans', 'gayrimenkul-hukuk'].includes(g.id));
-  const col2 = groups.filter((g) => ['bordro-vergi', 'zaman-takvim'].includes(g.id));
+  const col1 = groups.filter((g) =>
+    ['finans', 'gayrimenkul-hukuk'].includes(g.id),
+  );
+  const col2 = groups.filter((g) =>
+    ['bordro-vergi', 'zaman-takvim'].includes(g.id),
+  );
   const col3 = groups.filter((g) =>
-    ['gunluk-alisveris', 'saglik-beslenme', 'matematik-muhendislik'].includes(g.id),
+    ['gunluk-alisveris', 'saglik-beslenme', 'matematik-muhendislik'].includes(
+      g.id,
+    ),
   );
 
   const isCalculatorPage =
@@ -39,6 +46,7 @@ export function DesktopNav({ groups }: DesktopNavProps) {
 
   const renderGroup = (group: NavCategoryGroup) => {
     const Icon = getCategoryIcon(group.id);
+    const theme = getCategoryTheme(group.id);
     const isCatActive =
       pathname === group.href || pathname.startsWith(`${group.href}/`);
 
@@ -50,12 +58,10 @@ export function DesktopNav({ groups }: DesktopNavProps) {
             onClick={() => setOpen(false)}
             className={cn(
               'group/title flex items-center gap-1.5 font-display text-caption font-bold transition-colors',
-              isCatActive
-                ? 'text-hesaplamalarim-blue'
-                : 'text-titanium hover:text-hesaplamalarim-blue',
+              isCatActive ? theme.text : `text-titanium hover:${theme.text}`,
             )}
           >
-            <Icon className="h-3.5 w-3.5 text-hesaplamalarim-blue" />
+            <Icon className={cn('h-3.5 w-3.5', theme.text)} />
             <span>{group.shortTitle}</span>
           </Link>
           <Link

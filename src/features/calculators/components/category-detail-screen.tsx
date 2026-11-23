@@ -19,6 +19,7 @@ import {
   ALL_CALCULATORS,
   CALCULATOR_CATEGORIES,
   CalculatorCategoryMeta,
+  getCategoryTheme,
 } from '../registry';
 import { AnimatedGeometricBackdrop, GamificationHud } from './visuals';
 
@@ -39,13 +40,14 @@ export function CategoryDetailScreen({
     CALCULATOR_CATEGORIES.find((c) => c.id === categoryId) ??
     CALCULATOR_CATEGORIES[0];
 
+  const theme = getCategoryTheme(category.id);
   const tools = ALL_CALCULATORS.filter((c) => c.categoryId === category.id);
   const discoveredInCat = tools.filter(
     (t) => mounted && discoveredIds.includes(t.id),
   ).length;
 
   return (
-    <div className="relative mx-auto w-full max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+    <div className="relative mx-auto w-full max-w-[1600px] space-y-8 px-4 py-6 sm:px-6 lg:px-8">
       <AnimatedGeometricBackdrop />
 
       {/* 1. Üst Navigasyon */}
@@ -55,7 +57,7 @@ export function CategoryDetailScreen({
             Ana Sayfa
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
-          <span className="font-bold italic text-hesaplamalarim-blue">
+          <span className={`font-semibold ${theme.text}`}>
             {category.shortTitle}
           </span>
         </div>
@@ -77,16 +79,18 @@ export function CategoryDetailScreen({
       <GamificationHud />
 
       {/* 3. Kategori Başlık Kartı */}
-      <div className="relative overflow-hidden rounded-2xl border border-hesaplamalarim-blue/35 bg-gradient-to-br from-obsidian via-void-black/90 to-hesaplamalarim-blue/10 p-6 shadow-md sm:p-8">
+      <div
+        className={`relative overflow-hidden rounded-2xl border ${theme.border} bg-gradient-to-br from-obsidian via-obsidian/95 ${theme.gradientFrom} p-6 shadow-md sm:p-8`}
+      >
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <Badge
-              variant="default"
-              className="font-mono text-micro font-semibold italic"
+              variant="outline"
+              className={`font-mono text-micro font-semibold ${theme.border} ${theme.bgSoft} ${theme.text}`}
             >
               Kategori Keşfi: {discoveredInCat} / {tools.length} Tamamlandı
             </Badge>
-            <h1 className="font-display text-heading font-bold tracking-tight text-titanium sm:text-3xl">
+            <h1 className="font-display text-heading font-bold tracking-tight text-titanium">
               {category.title}
             </h1>
             <p className="max-w-2xl font-sans text-body-sm font-normal leading-relaxed text-ash">
@@ -112,16 +116,21 @@ export function CategoryDetailScreen({
                 href={`/${tool.categoryId}/${tool.id}`}
                 className="block h-full"
               >
-                <Card className="relative h-full overflow-hidden border-gunmetal/70 bg-obsidian/95 transition-all hover:border-hesaplamalarim-blue/60 hover:shadow-lg">
+                <Card
+                  className={`relative h-full overflow-hidden border-gunmetal/70 bg-obsidian/95 transition-all ${theme.hoverBorder} hover:shadow-lg`}
+                >
+                  <div className={`h-1 w-full ${theme.topBar}`} />
                   <CardContent className="flex h-full flex-col justify-between p-5">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-hesaplamalarim-blue/40 bg-hesaplamalarim-blue/15 text-hesaplamalarim-blue">
+                        <span
+                          className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border ${theme.border} ${theme.bgSoft} ${theme.text}`}
+                        >
                           <Calculator className="h-4 w-4" />
                         </span>
                         <Badge
                           variant={isDiscovered ? 'default' : 'outline'}
-                          className="font-mono text-micro font-semibold italic"
+                          className="font-mono text-micro font-semibold"
                         >
                           {isDiscovered ? (
                             <span className="inline-flex items-center gap-1">
@@ -129,7 +138,9 @@ export function CategoryDetailScreen({
                               Keşfedildi (+25 XP)
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 text-hesaplamalarim-blue">
+                            <span
+                              className={`inline-flex items-center gap-1 ${theme.text}`}
+                            >
                               <Compass className="h-3 w-3" />
                               Yeni Görev (+75 XP)
                             </span>
@@ -148,10 +159,12 @@ export function CategoryDetailScreen({
                     </div>
 
                     <div className="mt-5 flex items-center justify-between border-t border-gunmetal/60 pt-3">
-                      <span className="font-mono text-2xs font-medium italic text-ash">
+                      <span className="font-mono text-2xs font-medium text-ash">
                         {tool.fields.length} Parametre
                       </span>
-                      <span className="font-mono text-compact font-bold text-hesaplamalarim-blue">
+                      <span
+                        className={`font-mono text-compact font-bold ${theme.text}`}
+                      >
                         Aracı Aç →
                       </span>
                     </div>
@@ -168,17 +181,19 @@ export function CategoryDetailScreen({
         <span className="mr-2 font-sans text-2xs font-semibold italic text-ash">
           Diğer Kategoriler:
         </span>
-        {CALCULATOR_CATEGORIES.filter((c) => c.id !== category.id).map((cat) => (
-          <Button
-            key={cat.id}
-            asChild
-            variant="outline"
-            size="sm"
-            className="font-sans text-compact font-semibold"
-          >
-            <Link href={`/${cat.id}`}>{cat.shortTitle}</Link>
-          </Button>
-        ))}
+        {CALCULATOR_CATEGORIES.filter((c) => c.id !== category.id).map(
+          (cat) => (
+            <Button
+              key={cat.id}
+              asChild
+              variant="outline"
+              size="sm"
+              className="font-sans text-compact font-semibold"
+            >
+              <Link href={`/${cat.id}`}>{cat.shortTitle}</Link>
+            </Button>
+          ),
+        )}
       </div>
     </div>
   );

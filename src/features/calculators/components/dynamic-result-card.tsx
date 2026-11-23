@@ -1,10 +1,15 @@
-﻿'use client';
+'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 
 import { Badge } from '@/components/core/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/core/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/core/card';
 import {
   Table,
   TableBody,
@@ -25,17 +30,25 @@ export function DynamicResultCard({
   result,
   calculationTick = 0,
 }: DynamicResultCardProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.div
       key={calculationTick}
-      initial={{ opacity: 0.85, scale: 0.98, y: 6 }}
+      initial={
+        prefersReducedMotion ? false : { opacity: 0.85, scale: 0.98, y: 6 }
+      }
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 320, damping: 24 }}
     >
       <Card className="relative overflow-hidden border-hesaplamalarim-blue/40 bg-obsidian/95 shadow-lg backdrop-blur-md">
         {/* Animated Geometric Decorative Shape */}
         <motion.div
-          animate={{ rotate: [0, 180, 360], scale: [1, 1.12, 1] }}
+          animate={
+            prefersReducedMotion
+              ? undefined
+              : { rotate: [0, 180, 360], scale: [1, 1.12, 1] }
+          }
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
           className="pointer-events-none absolute -bottom-10 -right-10 h-32 w-32 rotate-45 rounded-3xl border border-hesaplamalarim-blue/20 bg-hesaplamalarim-blue/5"
         />
@@ -49,7 +62,7 @@ export function DynamicResultCard({
             {result.badge && (
               <Badge
                 variant="outline"
-                className="border-hesaplamalarim-blue/45 bg-hesaplamalarim-blue/10 font-mono text-micro font-semibold italic text-hesaplamalarim-blue"
+                className="border-hesaplamalarim-blue/45 bg-hesaplamalarim-blue/10 font-mono text-micro font-semibold text-hesaplamalarim-blue"
               >
                 {result.badge}
               </Badge>
@@ -57,7 +70,7 @@ export function DynamicResultCard({
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="relative overflow-hidden rounded-xl border border-hesaplamalarim-blue/30 bg-gradient-to-br from-void-black via-obsidian to-hesaplamalarim-blue/10 p-4">
+          <div className="to-hesaplamalarim-blue/12 relative overflow-hidden rounded-xl border border-hesaplamalarim-blue/30 bg-gradient-to-br from-void-black via-obsidian p-4">
             <div className="font-mono text-2xs font-semibold uppercase tracking-wider text-ash">
               {result.primaryLabel}
             </div>
@@ -65,7 +78,7 @@ export function DynamicResultCard({
               {result.primaryValue}
             </div>
             {result.primarySubtitle && (
-              <div className="mt-1.5 font-sans text-compact font-normal italic text-ash">
+              <div className="mt-1.5 font-sans text-compact font-medium text-ash">
                 {result.primarySubtitle}
               </div>
             )}
@@ -81,7 +94,7 @@ export function DynamicResultCard({
                   transition={{ delay: idx * 0.04 }}
                   className="rounded-lg border border-gunmetal/70 bg-void-black/75 p-3 transition-colors hover:border-hesaplamalarim-blue/35"
                 >
-                  <span className="block font-sans text-2xs font-normal italic text-ash">
+                  <span className="block font-sans text-2xs font-medium text-ash">
                     {metric.label}
                   </span>
                   <span

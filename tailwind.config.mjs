@@ -1,4 +1,4 @@
-﻿/** @type {import('tailwindcss').Config} */
+/** @type {import('tailwindcss').Config} */
 
 const SHADES = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
 
@@ -77,6 +77,9 @@ const config = {
         'hesaplamalarim-gold': createColorScale('warning', 'hesaplamalarim-gold'),
         'hesaplamalarim-firuze': 'hsl(var(--hesaplamalarim-firuze) / <alpha-value>)',
         'hesaplamalarim-cosmic': 'hsl(var(--hesaplamalarim-cosmic) / <alpha-value>)',
+        'accent-violet': 'hsl(var(--accent-violet) / <alpha-value>)',
+        'accent-amber': 'hsl(var(--accent-amber) / <alpha-value>)',
+        'accent-rose': 'hsl(var(--accent-rose) / <alpha-value>)',
         'signal-green': createColorScale('success', 'signal-green'),
         'alert-red': createColorScale('error', 'alert-red'),
       },
@@ -92,26 +95,26 @@ const config = {
       },
 
       fontSize: {
-        micro: ['0.625rem', { lineHeight: '0.875rem', letterSpacing: '0.02em' }],
-        '2xs': ['0.6875rem', { lineHeight: '1rem', letterSpacing: '0.02em' }],
-        compact: ['0.75rem', { lineHeight: '1.125rem' }],
-        caption: ['0.8125rem', { lineHeight: '1.25rem' }],
-        'body-sm': ['0.875rem', { lineHeight: '1.45rem' }],
-        body: ['1rem', { lineHeight: '1.65rem' }],
+        micro: ['0.75rem', { lineHeight: '1rem', letterSpacing: '0.015em' }],
+        '2xs': ['0.8125rem', { lineHeight: '1.15rem', letterSpacing: '0.01em' }],
+        compact: ['0.875rem', { lineHeight: '1.3rem' }],
+        caption: ['0.9375rem', { lineHeight: '1.45rem' }],
+        'body-sm': ['1rem', { lineHeight: '1.55rem' }],
+        body: ['1.0625rem', { lineHeight: '1.7rem' }],
         'heading-sm': [
-          '1.125rem',
+          '1.25rem',
           { lineHeight: '1.35', letterSpacing: '-0.015em' },
         ],
         heading: [
-          '1.5rem',
-          { lineHeight: '1.25', letterSpacing: '-0.02em' },
+          '1.75rem',
+          { lineHeight: '1.22', letterSpacing: '-0.02em' },
         ],
         metric: [
-          '1.875rem',
+          '2.125rem',
           { lineHeight: '1.15', letterSpacing: '-0.025em' },
         ],
         display: [
-          'clamp(1.875rem, 3.6vw, 3rem)',
+          'clamp(2.25rem, 4vw, 3.5rem)',
           { lineHeight: '1.12', letterSpacing: '-0.03em' },
         ],
       },

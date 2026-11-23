@@ -153,7 +153,11 @@
   --hesaplamalarim-blue-900: 214 100% 94%;
   --hesaplamalarim-blue-950: 214 100% 97%;
   --hesaplamalarim-blue: 213 94% 62%;
-  --hesaplamalarim-firuze: 174 84% 46%;
+  --hesaplamalarim-firuze: 174 84% 48%;
   --hesaplamalarim-cosmic: 222 47% 5%;
-}
 
+  /* -- Auxiliary Category & Delight Accent Tokens (Dark Mode) -- */
+  --accent-violet: 265 89% 70%;
+  --accent-amber: 32 95% 58%;
+  --accent-rose: 340 88% 66%;
+}

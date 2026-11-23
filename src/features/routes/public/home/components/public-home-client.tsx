@@ -6,7 +6,7 @@ import type { PublicHomeCopy } from '../types';
 
 export function PublicHomeClient({ copy }: { copy: PublicHomeCopy }) {
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-12 px-4 py-8 sm:space-y-16 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-[1600px] space-y-10 px-4 py-6 sm:space-y-14 sm:px-6 lg:px-8">
       {/* 1. Hero Section */}
       <HomeHero badges={copy.badges} hero={copy.hero} />
 

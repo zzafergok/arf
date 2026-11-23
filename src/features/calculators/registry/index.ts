@@ -8,6 +8,7 @@ import { PAYROLL_CALCULATORS } from './payroll-calculators';
 import { CalculatorCategoryMeta, CalculatorDefinition } from './types';
 
 export * from './types';
+export * from './category-theme';
 
 export const CALCULATOR_CATEGORIES: CalculatorCategoryMeta[] = [
   {

@@ -4,18 +4,9 @@ import {
   hesaplaKdvTevkifat,
   hesaplaSmm,
 } from '@/lib/calculators/payroll';
-import { formatCurrency, parseAmountInput } from '@/lib/utils';
 import { SALARY_SEVERANCE_CALCULATORS } from './salary-severance-calculators';
 import { CalculatorDefinition } from './types';
-
-function num(v: string | number | undefined, fallback = 0): number {
-  if (typeof v === 'number') return Number.isFinite(v) ? v : fallback;
-  if (!v) return fallback;
-  const parsed = parseAmountInput(String(v));
-  return parsed !== null && Number.isFinite(parsed) ? parsed : Number(v) || fallback;
-}
-
-const tl = (amount: number) => formatCurrency(amount, 'TRY', 'tr-TR');
+import { num, tl } from './utils';
 
 export const PAYROLL_CALCULATORS: CalculatorDefinition[] = [
   ...SALARY_SEVERANCE_CALCULATORS,
@@ -208,8 +199,7 @@ export const PAYROLL_CALCULATORS: CalculatorDefinition[] = [
       const res = hesaplaSmm({
         tutar: num(v.tutar, 30000),
         hesaplamaYonu: String(v.hesaplamaYonu || 'brutten') as
-          | 'brutten'
-          | 'net-tahsilattan',
+          'brutten' | 'net-tahsilattan',
         stopajOrani: num(v.stopajOrani, 20),
         kdvOrani: num(v.kdvOrani, 20),
       });
