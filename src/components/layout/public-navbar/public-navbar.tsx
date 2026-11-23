@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { Link } from '@/components/core/link';
+import { siteMetadata } from '@/lib/metadata/site-metadata';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
 import { ThemeToggle } from '@/components/layout/theme-toggle';
 import { getNavCategoryGroups } from './constants';
@@ -20,13 +21,21 @@ export function PublicNavbar({
     <header className="sticky top-0 z-40 border-b border-gunmetal/70 bg-obsidian/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gunmetal/70 bg-white p-0.5 shadow-sm">
+          <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg shadow-sm">
             <Image
               src={brandLogo}
               alt={`${brandTitle} logosu`}
               width={36}
               height={36}
-              className="h-full w-full object-contain"
+              className="hidden h-full w-full object-contain dark:block"
+              priority
+            />
+            <Image
+              src={siteMetadata.assets.logoLight}
+              alt={`${brandTitle} logosu`}
+              width={36}
+              height={36}
+              className="h-full w-full object-contain dark:hidden"
               priority
             />
           </span>

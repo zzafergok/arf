@@ -52,3 +52,14 @@ Bu dosya, kullanıcı geri bildirimleri, mimari denetimler ve geliştirme sürec
 ## 10. RSC & Client Component Veri Serileştirme (Plain Object Kuralı)
 
 - **Fonksiyon ve İkon Nesnesi Taşıma Yasağı:** Server Component'lerden Client Component'lere prop olarak veri aktarılırken yalnızca plain JSON objeleri (string, number, boolean, array, plain object) aktarılabilir. LucideIcon, React elementleri veya metot içeren objeler doğrudan prop olarak geçildiğinde `Only plain objects can be passed to Client Components from Server Components` hatası oluşur. İkonlar ve fonksiyonel yapılar daima Client Component seviyesinde ID/string anahtar üzerinden çözümlenmelidir.
+
+## 11. İkon, Favicon ve Uygulama İkonu Render Kuralları
+
+- **Şeffaf Alfa Kanalı ve Tam Kaplama (Full-Bleed) Ayrımı:** macOS `qlmanage -t` komutu SVG dosyalarını opak beyaz arka plan üzerine render ederek yuvarlatılmış köşelerde beyaz üçgen artıklara yol açar. Şeffaf köşeli `favicon-*.png` ve `favicon.ico` dosyaları daima gerçek alfa kanalı (WebKit/CoreGraphics) ile üretilmeli; `apple-touch-icon.png` ve `android-chrome-*.png` (`any` / `maskable`) uygulama ikonları ise işletim sistemi maskelemesiyle uyumlu olması için tam kaplama (full-bleed, `rx="0"`) olarak oluşturulmalıdır.
+
+## 12. Logo Tasarımında Tema Uyumu
+
+- **Modern marka dili:** Logo alternatiflerinde tarihî referansları sade geometrik işaretlere dönüştür; uygulamanın mevcut mavi ve lacivert tema tokenlarını esas al ve yoğun süslemeden kaçın.
+- **Görsel referansın yönü:** Kullanıcı çağdaş, karakterli ve hafif hacimli bir ikon referansı verdiğinde düz monogram veya geleneksel arma yönünde ısrar etme; özgün merkez formunu ve hem açık hem koyu tema örneğini göster.
+- **Onaylanan tasarıma sadakat:** Kullanıcı belirli bir görseli onayladığında logoyu benzer geometrilerle yeniden çizme; onaylanan görselin ışık, örgü ve formunu koruyarak gerçek varlıkları görselden üret ve karşılaştır.
+- **Eski logo varyantları:** Onaylanan tasarım değiştiğinde önceki SVG gibi artıklar da kontrol edilmeli; aynı adla farklı görsel içerik bırakılmamalıdır.

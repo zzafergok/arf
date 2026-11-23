@@ -64,13 +64,6 @@ export function buildRootMetadata(
           type: 'image/png',
         },
       ],
-      other: [
-        {
-          rel: 'mask-icon',
-          url: siteMetadata.assets.icon48,
-          color: '#5d5dff',
-        },
-      ],
     },
     alternates: {
       canonical: '/',
@@ -84,9 +77,9 @@ export function buildRootMetadata(
       images: [
         {
           url: siteMetadata.assets.openGraph,
-          width: 1024,
-          height: 1024,
-          alt: `${siteMetadata.name} application template brand symbol`,
+          width: 1200,
+          height: 630,
+          alt: `${siteMetadata.name} - Finans ve Çalışma Hayatı Hesaplama Platformu`,
         },
       ],
       locale,

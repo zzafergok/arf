@@ -29,8 +29,9 @@ export const siteMetadata = {
     appleTouchIcon: '/assets/images/apple-touch-icon.png',
     android192: '/assets/images/android-chrome-192x192.png',
     android512: '/assets/images/android-chrome-512x512.png',
-    logo: '/assets/images/hesaplamalarim-brand-mark.jpeg',
-    openGraph: '/assets/images/hesaplamalarim-open-graph.jpeg',
+    logo: '/assets/images/hesaplamalarim-logo-dark-approved.png',
+    logoLight: '/assets/images/hesaplamalarim-logo-light-approved.png',
+    openGraph: '/assets/images/hesaplamalarim-open-graph.png',
   },
   aiSummary:
     'Hesaplamalarım is an online calculator suite offering up-to-date 2026 severance pay, notice indemnity, and salary/payroll calculations.',

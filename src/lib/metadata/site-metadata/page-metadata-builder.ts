@@ -81,9 +81,9 @@ export function buildPageMetadata(
       images: [
         {
           url: siteMetadata.assets.openGraph,
-          width: 1024,
-          height: 1024,
-          alt: `${siteMetadata.name} application template brand symbol`,
+          width: 1200,
+          height: 630,
+          alt: `${siteMetadata.name} - ${localized.title}`,
         },
       ],
       locale,
