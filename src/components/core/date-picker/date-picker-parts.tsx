@@ -10,7 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/core/select';
-import { timeZones } from './constants';
+import { datePickerCopy, timeZones } from './constants';
+import type { Locale } from '@/i18n/routing';
 import type { DateRange, PresetOption } from './types';
 
 interface DatePickerFooterProps {
@@ -18,6 +19,7 @@ interface DatePickerFooterProps {
   value?: Date | Date[] | DateRange | null;
   clearable?: boolean;
   enableTime?: boolean;
+  locale?: Locale;
   onClear: () => void;
   onClose: () => void;
 }
@@ -27,9 +29,11 @@ export function DatePickerFooter({
   value,
   clearable = true,
   enableTime = false,
+  locale = 'tr',
   onClear,
   onClose,
 }: DatePickerFooterProps) {
+  const copy = datePickerCopy[locale];
   const range =
     value && typeof value === 'object' && 'from' in value
       ? (value as DateRange)
@@ -39,24 +43,26 @@ export function DatePickerFooter({
     <div className="flex items-center justify-between border-t border-gunmetal p-3">
       <div className="text-sm text-ash">
         {mode === 'multiple' && Array.isArray(value) && (
-          <span>{value.length} tarih seçildi</span>
+          <span>
+            {value.length} {copy.selectedDatesSuffix}
+          </span>
         )}
         {mode === 'range' && range && (
           <span>
             {range.from && range.to
-              ? `${Math.ceil((range.to.getTime() - range.from.getTime()) / (1000 * 60 * 60 * 24) + 1)} gün`
-              : 'Bitiş tarihi seçin'}
+              ? `${Math.ceil((range.to.getTime() - range.from.getTime()) / (1000 * 60 * 60 * 24) + 1)} ${copy.daysSuffix}`
+              : copy.selectEndDate}
           </span>
         )}
       </div>
       <div className="flex items-center gap-2">
         {clearable && value && (
           <Button variant="ghost" size="sm" onClick={onClear}>
-            Temizle
+            {copy.clear}
           </Button>
         )}
         <Button size="sm" onClick={onClose}>
-          {enableTime ? 'Tamam' : 'Kapat'}
+          {enableTime ? copy.done : copy.close}
         </Button>
       </div>
     </div>
@@ -66,19 +72,24 @@ export function DatePickerFooter({
 interface PresetSidebarProps {
   enablePresets?: boolean;
   presets: PresetOption[];
+  locale?: Locale;
   onPresetSelect: (value: Date | Date[] | DateRange) => void;
 }
 
 export function PresetSidebar({
   enablePresets = false,
   presets,
+  locale = 'tr',
   onPresetSelect,
 }: PresetSidebarProps) {
   if (!enablePresets || !presets.length) return null;
+  const copy = datePickerCopy[locale];
 
   return (
     <div className="w-48 border-r border-gunmetal p-3">
-      <div className="mb-3 text-sm font-medium text-titanium">Hızlı Seçim</div>
+      <div className="mb-3 text-sm font-medium text-titanium">
+        {copy.quickSelection}
+      </div>
       <div className="space-y-1">
         {presets.map((preset, index) => (
           <Button
@@ -101,6 +112,7 @@ interface TimePickerProps {
   minutes: number;
   enableTimezone?: boolean;
   selectedTimezone: string;
+  locale?: Locale;
   onTimeChange: (hours: number, minutes: number) => void;
   onTimezoneChange: (timezone: string) => void;
 }
@@ -110,9 +122,11 @@ export function TimePicker({
   minutes,
   enableTimezone = false,
   selectedTimezone,
+  locale = 'tr',
   onTimeChange,
   onTimezoneChange,
 }: TimePickerProps) {
+  const copy = datePickerCopy[locale];
   const hourOptions = Array.from({ length: 24 }, (_, i) => i);
   const minuteOptions = Array.from({ length: 60 }, (_, i) => i).filter(
     (minute) => minute % 5 === 0,
@@ -122,7 +136,7 @@ export function TimePicker({
     <div className="border-t border-gunmetal p-3">
       <div className="mb-3 flex items-center gap-2">
         <Clock className="h-4 w-4 text-ash" />
-        <span className="text-sm font-medium">Saat</span>
+        <span className="text-sm font-medium">{copy.time}</span>
       </div>
       <div className="flex items-center gap-2">
         <Select
@@ -161,7 +175,7 @@ export function TimePicker({
         <div className="mt-3">
           <div className="mb-2 flex items-center gap-2">
             <Globe className="h-4 w-4 text-ash" />
-            <span className="text-sm font-medium">Zaman Dilimi</span>
+            <span className="text-sm font-medium">{copy.timezone}</span>
           </div>
           <Select value={selectedTimezone} onValueChange={onTimezoneChange}>
             <SelectTrigger>

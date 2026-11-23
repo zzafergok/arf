@@ -14,8 +14,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/core/popover';
+import { useCurrentLocale } from '@/components/providers/client-locale-provider';
 import { cn } from '@/lib/utils';
 
+import { datePickerCopy } from './constants';
 import {
   DatePickerFooter,
   PresetSidebar,
@@ -25,27 +27,29 @@ import { useDatePicker } from './use-date-picker';
 import type { DatePickerProps, DateRange } from './types';
 
 export function DatePicker(props: DatePickerProps) {
+  const activeLocale = useCurrentLocale();
+  const resolvedLocale = props.locale ?? activeLocale;
+  const copy = datePickerCopy[resolvedLocale];
   const {
     value,
     mode = 'single',
     enableTime = false,
     enableTimezone = false,
-    placeholder = 'Tarih seçin',
+    placeholder = copy.selectDate,
     showWeekNumbers = false,
-    weekStartsOn = 1,
+    weekStartsOn = resolvedLocale === 'tr' ? 1 : 0,
     disabled = false,
     readOnly = false,
     clearable = true,
     showFooter = true,
     className,
     enablePresets = false,
-    locale = 'tr',
     onFocus,
     onBlur,
   } = props;
 
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const dateLocale = locale === 'tr' ? tr : enUS;
+  const dateLocale = resolvedLocale === 'tr' ? tr : enUS;
   const [isOpen, setIsOpen] = useState(false);
   const [currentMonth, setCurrentMonth] = useState<Date>(
     value instanceof Date ? value : new Date(),
@@ -62,7 +66,7 @@ export function DatePicker(props: DatePickerProps) {
     handleTimeChange,
     handlePresetSelect,
     handleClear,
-  } = useDatePicker(props);
+  } = useDatePicker({ ...props, locale: resolvedLocale });
 
   const { onMonthChange, onYearChange } = props;
 
@@ -120,6 +124,20 @@ export function DatePicker(props: DatePickerProps) {
             } satisfies DayPickerDateRange)
           : undefined;
 
+  const commonCalendarProps = {
+    month: currentMonth,
+    onMonthChange: handleMonthChange,
+    locale: dateLocale,
+    weekStartsOn,
+    showWeekNumber: showWeekNumbers,
+    labels: {
+      labelPrevious: () => copy.previousMonth,
+      labelNext: () => copy.nextMonth,
+    },
+    disabled: isDateDisabled,
+    className: 'border-0 bg-transparent shadow-none',
+  };
+
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -161,6 +179,7 @@ export function DatePicker(props: DatePickerProps) {
           <PresetSidebar
             enablePresets={enablePresets}
             presets={presets}
+            locale={resolvedLocale}
             onPresetSelect={handlePresetSelection}
           />
 
@@ -170,13 +189,7 @@ export function DatePicker(props: DatePickerProps) {
                 mode="single"
                 selected={rdpSelected as Date | undefined}
                 onSelect={handleSingleSelect}
-                month={currentMonth}
-                onMonthChange={handleMonthChange}
-                locale={dateLocale}
-                weekStartsOn={weekStartsOn}
-                showWeekNumber={showWeekNumbers}
-                disabled={isDateDisabled}
-                className="border-0 shadow-none"
+                {...commonCalendarProps}
               />
             )}
             {mode === 'multiple' && (
@@ -184,13 +197,7 @@ export function DatePicker(props: DatePickerProps) {
                 mode="multiple"
                 selected={rdpSelected as Date[] | undefined}
                 onSelect={handleMultipleSelect}
-                month={currentMonth}
-                onMonthChange={handleMonthChange}
-                locale={dateLocale}
-                weekStartsOn={weekStartsOn}
-                showWeekNumber={showWeekNumbers}
-                disabled={isDateDisabled}
-                className="border-0 shadow-none"
+                {...commonCalendarProps}
               />
             )}
             {mode === 'range' && (
@@ -198,13 +205,7 @@ export function DatePicker(props: DatePickerProps) {
                 mode="range"
                 selected={rdpSelected as DayPickerDateRange | undefined}
                 onSelect={handleRangeSelect}
-                month={currentMonth}
-                onMonthChange={handleMonthChange}
-                locale={dateLocale}
-                weekStartsOn={weekStartsOn}
-                showWeekNumber={showWeekNumbers}
-                disabled={isDateDisabled}
-                className="border-0 shadow-none"
+                {...commonCalendarProps}
               />
             )}
 
@@ -214,6 +215,7 @@ export function DatePicker(props: DatePickerProps) {
                 minutes={selectedTime.minutes}
                 enableTimezone={enableTimezone}
                 selectedTimezone={selectedTimezone}
+                locale={resolvedLocale}
                 onTimeChange={handleTimeChange}
                 onTimezoneChange={setSelectedTimezone}
               />
@@ -225,6 +227,7 @@ export function DatePicker(props: DatePickerProps) {
                 value={value}
                 clearable={clearable}
                 enableTime={enableTime}
+                locale={resolvedLocale}
                 onClear={handleClear}
                 onClose={() => setIsOpen(false)}
               />
@@ -234,20 +237,4 @@ export function DatePicker(props: DatePickerProps) {
       </PopoverContent>
     </Popover>
   );
-}
-
-export function createSingleDatePicker(props: Partial<DatePickerProps> = {}) {
-  return <DatePicker mode="single" {...props} />;
-}
-
-export function createDateRangePicker(props: Partial<DatePickerProps> = {}) {
-  return <DatePicker mode="range" enablePresets {...props} />;
-}
-
-export function createMultipleDatePicker(props: Partial<DatePickerProps> = {}) {
-  return <DatePicker mode="multiple" {...props} />;
-}
-
-export function createDateTimePicker(props: Partial<DatePickerProps> = {}) {
-  return <DatePicker mode="single" enableTime {...props} />;
 }

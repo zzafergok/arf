@@ -1,4 +1,5 @@
 import { addDays, startOfMonth, endOfMonth } from 'date-fns';
+import type { Locale } from '@/i18n/routing';
 import type { PresetOption, TimeZoneOption } from './types';
 
 export const timeZones: TimeZoneOption[] = [
@@ -10,78 +11,138 @@ export const timeZones: TimeZoneOption[] = [
   { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
 ];
 
-export const defaultPresets: {
+export function getDefaultPresets(locale: Locale): {
   single: PresetOption[];
   range: PresetOption[];
-} = {
-  single: [
-    { label: 'Bugün', value: new Date() },
-    { label: 'Yarın', value: addDays(new Date(), 1) },
-    { label: 'Bir hafta sonra', value: addDays(new Date(), 7) },
-  ],
-  range: [
-    {
-      label: 'Son 7 gün',
-      value: { from: addDays(new Date(), -7), to: new Date() },
-    },
-    {
-      label: 'Son 30 gün',
-      value: { from: addDays(new Date(), -30), to: new Date() },
-    },
-    {
-      label: 'Bu ay',
-      value: { from: startOfMonth(new Date()), to: endOfMonth(new Date()) },
-    },
-  ],
-};
+} {
+  if (locale === 'en') {
+    return {
+      single: [
+        { label: 'Today', value: new Date() },
+        { label: 'Tomorrow', value: addDays(new Date(), 1) },
+        { label: 'In 1 week', value: addDays(new Date(), 7) },
+      ],
+      range: [
+        {
+          label: 'Last 7 days',
+          value: { from: addDays(new Date(), -7), to: new Date() },
+        },
+        {
+          label: 'Last 30 days',
+          value: { from: addDays(new Date(), -30), to: new Date() },
+        },
+        {
+          label: 'This month',
+          value: { from: startOfMonth(new Date()), to: endOfMonth(new Date()) },
+        },
+      ],
+    };
+  }
 
-import type { Locale } from '@/i18n/routing';
+  return {
+    single: [
+      { label: 'Bugün', value: new Date() },
+      { label: 'Yarın', value: addDays(new Date(), 1) },
+      { label: 'Bir hafta sonra', value: addDays(new Date(), 7) },
+    ],
+    range: [
+      {
+        label: 'Son 7 gün',
+        value: { from: addDays(new Date(), -7), to: new Date() },
+      },
+      {
+        label: 'Son 30 gün',
+        value: { from: addDays(new Date(), -30), to: new Date() },
+      },
+      {
+        label: 'Bu ay',
+        value: { from: startOfMonth(new Date()), to: endOfMonth(new Date()) },
+      },
+    ],
+  };
+}
+
+export const defaultPresets = getDefaultPresets('tr');
 
 export const datePickerCopy = {
   tr: {
-    quickSelection: 'Hızlı Seçim',
-    quickDates: [
-      'Bugün',
-      'Yarın',
-      '1 Hafta Sonra',
-      '2 Hafta Sonra',
-      '1 Ay Sonra',
-    ],
     days: ['Pt', 'Sa', 'Ça', 'Pe', 'Cu', 'Ct', 'Pa'],
     noDate: 'Tarih seçilmedi',
     selectDate: 'Tarih seçin',
     done: 'Tamam',
+    clear: 'Temizle',
+    close: 'Kapat',
     previousMonth: 'Önceki ay',
     nextMonth: 'Sonraki ay',
+    previousYear: 'Önceki yıl',
+    nextYear: 'Sonraki yıl',
+    selectedDatesSuffix: 'tarih seçildi',
+    daysSuffix: 'gün',
+    selectEndDate: 'Bitiş tarihi seçin',
+    quickSelection: 'Hızlı Seçim',
+    time: 'Saat',
+    timezone: 'Zaman Dilimi',
+    monthYearPlaceholder: 'Ay/Yıl seçin',
+    noMonthYear: 'Ay/Yıl seçilmedi',
+    months: [
+      'Ocak',
+      'Şubat',
+      'Mart',
+      'Nisan',
+      'Mayıs',
+      'Haziran',
+      'Temmuz',
+      'Ağustos',
+      'Eylül',
+      'Ekim',
+      'Kasım',
+      'Aralık',
+    ],
+    quickMonthLabels: ['Bu Ay', 'Geçen Ay', '6 Ay Önce', '1 Yıl Önce'],
   },
   en: {
-    quickSelection: 'Quick Select',
-    quickDates: ['Today', 'Tomorrow', 'In 1 Week', 'In 2 Weeks', 'In 1 Month'],
     days: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
     noDate: 'No date selected',
     selectDate: 'Select date',
     done: 'Done',
+    clear: 'Clear',
+    close: 'Close',
     previousMonth: 'Previous month',
     nextMonth: 'Next month',
+    previousYear: 'Previous year',
+    nextYear: 'Next year',
+    selectedDatesSuffix: 'dates selected',
+    daysSuffix: 'days',
+    selectEndDate: 'Select end date',
+    quickSelection: 'Quick Select',
+    time: 'Time',
+    timezone: 'Timezone',
+    monthYearPlaceholder: 'Select Month/Year',
+    noMonthYear: 'No month/year selected',
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    quickMonthLabels: [
+      'This Month',
+      'Last Month',
+      '6 Months Ago',
+      '1 Year Ago',
+    ],
   },
 } satisfies Record<Locale, Record<string, string | string[]>>;
 
-export const quickDateOffsets = [0, 1, 7, 14, 30] as const;
-
-export const MONTHS = [
-  'Ocak',
-  'Şubat',
-  'Mart',
-  'Nisan',
-  'Mayıs',
-  'Haziran',
-  'Temmuz',
-  'Ağustos',
-  'Eylül',
-  'Ekim',
-  'Kasım',
-  'Aralık',
-];
+export const MONTHS = datePickerCopy.tr.months;
 
 export interface QuickDateItem {
   label: string;

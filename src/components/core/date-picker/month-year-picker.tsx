@@ -8,8 +8,9 @@ import {
   PopoverTrigger,
 } from '@/components/core/popover';
 import { Button } from '@/components/core/button';
+import { useCurrentLocale } from '@/components/providers/client-locale-provider';
 import { cn } from '@/lib/utils';
-import { MONTHS } from './constants';
+import { datePickerCopy } from './constants';
 import { MonthYearGrid, MonthYearSidebar } from './month-year-parts';
 import type { MonthYearPickerProps } from './types';
 import type { QuickDateItem } from './constants';
@@ -23,8 +24,13 @@ export function MonthYearPicker({
   error = false,
   disabled = false,
   clearable = true,
-  placeholder = 'Ay/Yıl seçin',
+  placeholder,
+  locale,
 }: MonthYearPickerProps) {
+  const activeLocale = useCurrentLocale();
+  const resolvedLocale = locale ?? activeLocale;
+  const copy = datePickerCopy[resolvedLocale];
+  const resolvedPlaceholder = placeholder ?? copy.monthYearPlaceholder;
   const [isOpen, setIsOpen] = useState(false);
 
   const currentDate = useMemo(() => {
@@ -39,10 +45,10 @@ export function MonthYearPicker({
   const [currentYear, setCurrentYear] = useState(currentDate.year);
 
   const displayValue = useMemo(() => {
-    if (!value) return placeholder;
+    if (!value) return resolvedPlaceholder;
     const [year, month] = value.split('-');
-    return `${MONTHS[parseInt(month, 10) - 1]} ${year}`;
-  }, [value, placeholder]);
+    return `${copy.months[parseInt(month, 10) - 1]} ${year}`;
+  }, [value, resolvedPlaceholder, copy.months]);
 
   const handleMonthSelect = (monthIndex: number) => {
     const monthStr = (monthIndex + 1).toString().padStart(2, '0');
@@ -97,7 +103,10 @@ export function MonthYearPicker({
         align="start"
       >
         <div className="flex">
-          <MonthYearSidebar onQuickDateSelect={handleQuickDateSelect} />
+          <MonthYearSidebar
+            locale={resolvedLocale}
+            onQuickDateSelect={handleQuickDateSelect}
+          />
 
           <MonthYearGrid
             currentYear={currentYear}
@@ -105,6 +114,7 @@ export function MonthYearPicker({
             minDate={minDate}
             maxDate={maxDate}
             displayValue={displayValue}
+            locale={resolvedLocale}
             onNavigateYear={navigateYear}
             onMonthSelect={handleMonthSelect}
             onClose={() => setIsOpen(false)}

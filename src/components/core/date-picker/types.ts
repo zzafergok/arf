@@ -82,5 +82,6 @@ export interface MonthYearPickerProps {
   className?: string;
   clearable?: boolean;
   placeholder?: string;
+  locale?: Locale;
   onChange: (value: string | null) => void;
 }

@@ -1,10 +1,11 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/core/button';
 import { cn } from '@/lib/utils';
-import { MONTHS, QUICK_DATES } from './constants';
+import type { Locale } from '@/i18n/routing';
+import { datePickerCopy, QUICK_DATES } from './constants';
 import type { QuickDateItem } from './constants';
 
 interface MonthYearGridProps {
@@ -13,6 +14,7 @@ interface MonthYearGridProps {
   minDate?: string;
   maxDate?: string;
   displayValue: string;
+  locale?: Locale;
   onNavigateYear: (direction: 'prev' | 'next') => void;
   onMonthSelect: (monthIndex: number) => void;
   onClose: () => void;
@@ -24,10 +26,12 @@ export function MonthYearGrid({
   minDate,
   maxDate,
   displayValue,
+  locale = 'tr',
   onNavigateYear,
   onMonthSelect,
   onClose,
 }: MonthYearGridProps) {
+  const copy = datePickerCopy[locale];
   const isMonthDisabled = (monthIndex: number) => {
     const monthValue = `${currentYear}-${(monthIndex + 1).toString().padStart(2, '0')}`;
     return Boolean(
@@ -41,6 +45,7 @@ export function MonthYearGrid({
         <Button
           variant="ghost"
           size="sm"
+          aria-label={copy.previousYear}
           onClick={() => onNavigateYear('prev')}
           className="h-8 w-8 p-0 hover:bg-gunmetal/20"
         >
@@ -52,6 +57,7 @@ export function MonthYearGrid({
         <Button
           variant="ghost"
           size="sm"
+          aria-label={copy.nextYear}
           onClick={() => onNavigateYear('next')}
           className="h-8 w-8 p-0 hover:bg-gunmetal/20"
         >
@@ -59,7 +65,7 @@ export function MonthYearGrid({
         </Button>
       </div>
       <div className="grid grid-cols-3 gap-2">
-        {MONTHS.map((month, index) => {
+        {copy.months.map((month, index) => {
           const monthValue = `${currentYear}-${(index + 1).toString().padStart(2, '0')}`;
           const selected = monthValue === value;
           const current =
@@ -75,7 +81,8 @@ export function MonthYearGrid({
               className={cn(
                 'relative flex h-10 items-center justify-center px-3 text-sm font-normal',
                 'text-titanium hover:bg-gunmetal/20',
-                selected && 'bg-hesaplamalarim-blue text-white hover:bg-hesaplamalarim-blue/90',
+                selected &&
+                  'bg-hesaplamalarim-blue text-white hover:bg-hesaplamalarim-blue/90',
                 current &&
                   !selected &&
                   'border border-hesaplamalarim-blue/20 bg-hesaplamalarim-blue/10 text-hesaplamalarim-blue',
@@ -94,7 +101,7 @@ export function MonthYearGrid({
       </div>
       <div className="mt-4 flex items-center justify-between border-t border-gunmetal pt-3">
         <div className="text-xs text-ash">
-          {value ? displayValue : 'Ay/Yıl seçilmedi'}
+          {value ? displayValue : copy.noMonthYear}
         </div>
         <Button
           size="sm"
@@ -102,7 +109,7 @@ export function MonthYearGrid({
           onClick={onClose}
           className="h-7 px-3 text-xs"
         >
-          Tamam
+          {copy.done}
         </Button>
       </div>
     </div>
@@ -110,17 +117,23 @@ export function MonthYearGrid({
 }
 
 interface MonthYearSidebarProps {
+  locale?: Locale;
   onQuickDateSelect: (quickDate: QuickDateItem) => void;
 }
 
-export function MonthYearSidebar({ onQuickDateSelect }: MonthYearSidebarProps) {
+export function MonthYearSidebar({
+  locale = 'tr',
+  onQuickDateSelect,
+}: MonthYearSidebarProps) {
+  const copy = datePickerCopy[locale];
+
   return (
     <div className="min-w-[120px] border-r border-gunmetal p-3">
       <div className="mb-2 text-xs font-bold uppercase tracking-wide text-ash/70">
-        Hızlı Seçim
+        {copy.quickSelection}
       </div>
       <div className="space-y-1">
-        {QUICK_DATES.map((quickDate) => (
+        {QUICK_DATES.map((quickDate, index) => (
           <Button
             key={quickDate.label}
             variant="ghost"
@@ -128,7 +141,7 @@ export function MonthYearSidebar({ onQuickDateSelect }: MonthYearSidebarProps) {
             className="h-8 w-full justify-start px-2 text-xs font-normal hover:bg-hesaplamalarim-blue/10"
             onClick={() => onQuickDateSelect(quickDate)}
           >
-            {quickDate.label}
+            {copy.quickMonthLabels[index] ?? quickDate.label}
           </Button>
         ))}
       </div>

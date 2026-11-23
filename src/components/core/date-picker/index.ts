@@ -1,10 +1,10 @@
+export { DatePicker } from './date-picker';
 export {
-  DatePicker,
   createSingleDatePicker,
   createDateRangePicker,
   createMultipleDatePicker,
   createDateTimePicker,
-} from './date-picker';
+} from './date-picker-factories';
 export {
   DatePickerFooter,
   PresetSidebar,
@@ -12,7 +12,6 @@ export {
 } from './date-picker-parts';
 
 export { ModernDatePicker } from './modern-date-picker';
-export { QuickDatesSidebar } from './modern-date-picker';
 
 export { MonthYearPicker } from './month-year-picker';
 export { MonthYearGrid, MonthYearSidebar } from './month-year-parts';
@@ -20,8 +19,8 @@ export { MonthYearGrid, MonthYearSidebar } from './month-year-parts';
 export {
   timeZones,
   defaultPresets,
+  getDefaultPresets,
   datePickerCopy,
-  quickDateOffsets,
   MONTHS,
   QUICK_DATES,
 } from './constants';

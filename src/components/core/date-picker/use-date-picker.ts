@@ -13,7 +13,7 @@ import {
 } from 'date-fns';
 import { tr } from 'date-fns/locale/tr';
 import { enUS } from 'date-fns/locale/en-US';
-import { defaultPresets } from './constants';
+import { getDefaultPresets } from './constants';
 import type { DatePickerProps, DateRange } from './types';
 
 function formatDisplayValue(
@@ -122,12 +122,11 @@ export function useDatePicker({
 
   const handleClear = useCallback(() => onChange?.(null), [onChange]);
 
-  const presets = useMemo(
-    () =>
-      customPresets ??
-      (mode === 'range' ? defaultPresets.range : defaultPresets.single),
-    [mode, customPresets],
-  );
+  const presets = useMemo(() => {
+    if (customPresets) return customPresets;
+    const localized = getDefaultPresets(locale);
+    return mode === 'range' ? localized.range : localized.single;
+  }, [mode, customPresets, locale]);
 
   return {
     selectedTime,
