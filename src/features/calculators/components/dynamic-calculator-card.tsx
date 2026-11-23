@@ -85,7 +85,12 @@ export function DynamicCalculatorCard({
         <Card
           className={`relative overflow-hidden ${theme.border} bg-obsidian/95 shadow-lg backdrop-blur-md`}
         >
-          <div className={`h-1.5 w-full ${theme.topBar}`} />
+          <div
+            className={`pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent ${theme.topBeam} to-transparent opacity-85`}
+          />
+          <div
+            className={`pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full ${theme.topBar} opacity-10 blur-2xl`}
+          />
           <CardHeader>
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div className="space-y-1">

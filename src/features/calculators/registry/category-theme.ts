@@ -8,6 +8,7 @@ export interface CategoryTheme {
   buttonBg: string;
   gradientFrom: string;
   topBar: string;
+  topBeam: string;
 }
 
 const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
@@ -19,6 +20,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-hesaplamalarim-blue hover:bg-hesaplamalarim-blue/90',
     gradientFrom: 'from-hesaplamalarim-blue/15',
     topBar: 'bg-hesaplamalarim-blue',
+    topBeam: 'via-hesaplamalarim-blue',
   },
   'bordro-vergi': {
     text: 'text-accent-violet',
@@ -28,6 +30,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-accent-violet hover:bg-accent-violet/90',
     gradientFrom: 'from-accent-violet/15',
     topBar: 'bg-accent-violet',
+    topBeam: 'via-accent-violet',
   },
   'gunluk-alisveris': {
     text: 'text-accent-amber',
@@ -37,6 +40,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-accent-amber hover:bg-accent-amber/90',
     gradientFrom: 'from-accent-amber/15',
     topBar: 'bg-accent-amber',
+    topBeam: 'via-accent-amber',
   },
   'saglik-beslenme': {
     text: 'text-signal-green',
@@ -46,6 +50,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-signal-green hover:bg-signal-green/90',
     gradientFrom: 'from-signal-green/15',
     topBar: 'bg-signal-green',
+    topBeam: 'via-signal-green',
   },
   'gayrimenkul-hukuk': {
     text: 'text-hesaplamalarim-gold',
@@ -55,6 +60,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-hesaplamalarim-gold hover:bg-hesaplamalarim-gold/90',
     gradientFrom: 'from-hesaplamalarim-gold/15',
     topBar: 'bg-hesaplamalarim-gold',
+    topBeam: 'via-hesaplamalarim-gold',
   },
   'zaman-takvim': {
     text: 'text-hesaplamalarim-firuze',
@@ -64,6 +70,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-hesaplamalarim-firuze hover:bg-hesaplamalarim-firuze/90',
     gradientFrom: 'from-hesaplamalarim-firuze/15',
     topBar: 'bg-hesaplamalarim-firuze',
+    topBeam: 'via-hesaplamalarim-firuze',
   },
   'matematik-muhendislik': {
     text: 'text-accent-rose',
@@ -73,6 +80,7 @@ const CATEGORY_THEMES: Record<CalculatorCategoryId, CategoryTheme> = {
     buttonBg: 'bg-accent-rose hover:bg-accent-rose/90',
     gradientFrom: 'from-accent-rose/15',
     topBar: 'bg-accent-rose',
+    topBeam: 'via-accent-rose',
   },
 };
 

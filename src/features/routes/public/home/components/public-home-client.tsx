@@ -1,12 +1,14 @@
 'use client';
 
+import { AnimatedGeometricBackdrop } from '@/features/calculators/components/visuals';
 import { CategoryDirectoryGrid } from './category-directory-grid';
 import { HomeHero } from './home-hero';
 import type { PublicHomeCopy } from '../types';
 
 export function PublicHomeClient({ copy }: { copy: PublicHomeCopy }) {
   return (
-    <div className="mx-auto w-full max-w-[1600px] space-y-10 px-4 py-6 sm:space-y-14 sm:px-6 lg:px-8">
+    <div className="relative mx-auto w-full max-w-[1600px] space-y-10 px-4 py-6 sm:space-y-14 sm:px-6 lg:px-8">
+      <AnimatedGeometricBackdrop />
       {/* 1. Hero Section */}
       <HomeHero badges={copy.badges} hero={copy.hero} />
 

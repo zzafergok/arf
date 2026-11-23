@@ -7,7 +7,11 @@
   ],
   "hero": {
     "title": "Hesaplamalarım: Güvenilir ve Güncel Hesaplama Araçları",
-    "description": "Kıdem tazminatı, ihbar tazminatı ve brüt-net maaş bordrosu gibi en çok ihtiyaç duyulan finansal ve yasal hesaplamaları anında, şeffaf ve kuruşu kuruşuna doğru yapın.",
-    "ctaAction": "Hemen Hesaplamaya Başla"
+    "description": "Kıdem tazminatı, ihbar tazminatı, brüt-net maaş bordrosu, kredi ve günlük yaşam hesaplamalarını anında, şeffaf ve doğru yapın.",
+    "ctaAction": "Kategorileri Keşfet",
+    "secondaryCta": "Finans Araçlarına Git",
+    "searchPlaceholder": "Araç ara (örn. Kredi, Kıdem, Maaş, VKİ, Kira)...",
+    "quickAccessTitle": "En Sık Kullanılan Araçlar",
+    "quickAccessSubtitle": "Tek tıkla doğrudan ilgili hesaplama ekranına geçin"
   }
 }

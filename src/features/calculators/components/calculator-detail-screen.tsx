@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowLeft, ChevronRight, Share2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, ChevronRight, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/core/button';
@@ -176,26 +176,32 @@ export function CalculatorDetailScreen({
               >
                 <Card
                   className={cn(
-                    'h-full border-gunmetal/70 bg-obsidian/90 transition-colors',
+                    'relative h-full overflow-hidden border-gunmetal/70 bg-obsidian/95 transition-all hover:shadow-lg',
                     theme.hoverBorder,
                   )}
                 >
-                  <CardContent className="flex h-full flex-col justify-between p-4">
-                    <div>
-                      <h3 className="font-display text-body-sm font-bold text-titanium">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1.5 line-clamp-2 font-sans text-compact font-normal leading-relaxed text-ash">
+                  <div
+                    className={cn(
+                      'pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent to-transparent opacity-70 transition-opacity group-hover/card:opacity-100',
+                      theme.topBeam,
+                    )}
+                  />
+                  <CardContent className="flex h-full flex-col justify-start p-5">
+                    <div className="space-y-1.5">
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-display text-body-sm font-bold leading-snug text-titanium">
+                          {item.title}
+                        </h3>
+                        <ArrowUpRight
+                          className={cn(
+                            'mt-0.5 h-4 w-4 shrink-0 text-ash transition-transform group-hover/card:-translate-y-0.5 group-hover/card:translate-x-0.5',
+                            theme.text,
+                          )}
+                        />
+                      </div>
+                      <p className="line-clamp-2 font-sans text-compact font-normal leading-relaxed text-ash">
                         {item.description}
                       </p>
-                    </div>
-                    <div
-                      className={cn(
-                        'mt-3 font-mono text-2xs font-bold',
-                        theme.text,
-                      )}
-                    >
-                      Hesaplama Sayfasına Git →
                     </div>
                   </CardContent>
                 </Card>

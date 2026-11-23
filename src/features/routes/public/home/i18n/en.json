@@ -7,7 +7,11 @@
   ],
   "hero": {
     "title": "Hesaplamalarım: Reliable Online Calculator Tools",
-    "description": "Calculate severance pay, notice indemnity, and net-to-gross salary breakdowns instantly and transparently in full compliance with current regulations.",
-    "ctaAction": "Start Calculating"
+    "description": "Calculate severance pay, notice indemnity, net-to-gross salary breakdowns, loans, and daily metrics instantly and transparently.",
+    "ctaAction": "Explore Categories",
+    "secondaryCta": "Open Finance Tools",
+    "searchPlaceholder": "Search calculators (e.g. Loan, Salary, BMI, Rent)...",
+    "quickAccessTitle": "Most Popular Calculators",
+    "quickAccessSubtitle": "Jump directly to the calculator screen in one click"
   }
 }

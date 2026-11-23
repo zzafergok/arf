@@ -4,5 +4,9 @@ export interface PublicHomeCopy {
     title: string;
     description: string;
     ctaAction: string;
+    secondaryCta: string;
+    searchPlaceholder: string;
+    quickAccessTitle: string;
+    quickAccessSubtitle: string;
   };
 }
