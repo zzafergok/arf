@@ -18,8 +18,8 @@ export function PublicNavbar({
 
   return (
     <header className="sticky top-0 z-40 border-b border-gunmetal/70 bg-obsidian/90 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2.5">
+      <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-gunmetal/70 bg-white p-0.5 shadow-sm">
             <Image
               src={brandLogo}
@@ -31,11 +31,8 @@ export function PublicNavbar({
             />
           </span>
           <span className="hidden sm:block">
-            <span className="block font-display text-caption font-bold tracking-tight text-titanium">
+            <span className="block whitespace-nowrap font-display text-caption font-bold tracking-tight text-titanium">
               {brandTitle}
-            </span>
-            <span className="block font-sans text-2xs font-normal italic text-ash">
-              {brandSubtitle}
             </span>
           </span>
         </Link>
@@ -44,7 +41,7 @@ export function PublicNavbar({
         <DesktopNav groups={groups} />
 
         {/* Sağ Kontroller & Mobil Açılır Menü */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <ThemeToggle />
           <LanguageSwitcher />
           <MobileNav groups={groups} />

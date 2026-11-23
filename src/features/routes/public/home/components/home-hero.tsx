@@ -77,8 +77,8 @@ export function HomeHero({
           transition={{ delay: 0.18 }}
           className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-hesaplamalarim-firuze/30 bg-hesaplamalarim-firuze/10 px-3.5 py-1 font-sans text-compact font-medium text-hesaplamalarim-firuze"
         >
-          Her hesaplama aracı kendi özel sayfasında çalışır; hesaplama yaptıkça
-          XP ve kaşif rozetleri kazanırsın.
+          Her hesaplama aracı kendi özel sayfasında güncel mevzuat ve
+          formüllerle anında çalışır.
         </motion.p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

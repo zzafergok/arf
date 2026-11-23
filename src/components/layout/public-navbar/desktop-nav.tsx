@@ -1,14 +1,14 @@
 'use client';
 
-import { Calculator, ChevronDown, ExternalLink } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
 
-import { Badge } from '@/components/core/badge';
-import { Button } from '@/components/core/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/core/dropdown-menu';
 import { Link } from '@/components/core/link';
@@ -23,154 +23,90 @@ interface DesktopNavProps {
 
 export function DesktopNav({ groups }: DesktopNavProps) {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
-
-  // 3 sütunlu dengeli dağılım
-  const col1 = groups.filter((g) =>
-    ['finans', 'gayrimenkul-hukuk'].includes(g.id),
-  );
-  const col2 = groups.filter((g) =>
-    ['bordro-vergi', 'zaman-takvim'].includes(g.id),
-  );
-  const col3 = groups.filter((g) =>
-    ['gunluk-alisveris', 'saglik-beslenme', 'matematik-muhendislik'].includes(
-      g.id,
-    ),
-  );
-
-  const isCalculatorPage =
-    pathname !== '/' &&
-    groups.some(
-      (g) => pathname === g.href || pathname.startsWith(`${g.href}/`),
-    );
-
-  const renderGroup = (group: NavCategoryGroup) => {
-    const Icon = getCategoryIcon(group.id);
-    const theme = getCategoryTheme(group.id);
-    const isCatActive =
-      pathname === group.href || pathname.startsWith(`${group.href}/`);
-
-    return (
-      <div key={group.id} className="space-y-1.5">
-        <div className="flex items-center justify-between border-b border-gunmetal/40 pb-1">
-          <Link
-            href={group.href}
-            onClick={() => setOpen(false)}
-            className={cn(
-              'group/title flex items-center gap-1.5 font-display text-caption font-bold transition-colors',
-              isCatActive ? theme.text : `text-titanium hover:${theme.text}`,
-            )}
-          >
-            <Icon className={cn('h-3.5 w-3.5', theme.text)} />
-            <span>{group.shortTitle}</span>
-          </Link>
-          <Link
-            href={group.href}
-            onClick={() => setOpen(false)}
-            className="text-2xs text-ash hover:text-titanium"
-            title={`${group.shortTitle} Sayfası`}
-          >
-            <ExternalLink className="h-3 w-3" />
-          </Link>
-        </div>
-
-        <ul className="space-y-0.5">
-          {group.calculators.map((calc) => {
-            const isItemActive = pathname === calc.href;
-            return (
-              <li key={calc.id}>
-                <Link
-                  href={calc.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    'group/link flex items-center justify-between rounded-md px-2 py-1 text-left font-sans text-compact transition-colors',
-                    isItemActive
-                      ? 'bg-hesaplamalarim-blue/15 font-semibold text-hesaplamalarim-blue'
-                      : 'text-ash hover:bg-gunmetal/30 hover:text-titanium',
-                  )}
-                >
-                  <span className="truncate">{calc.shortTitle}</span>
-                  <span className="font-mono text-micro opacity-0 transition-opacity group-hover/link:opacity-100">
-                    →
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  };
 
   return (
-    <nav aria-label="Ana Gezinim" className="hidden items-center gap-2 md:flex">
-      <Button
-        asChild
-        variant="ghost"
-        size="sm"
-        className={cn(
-          'font-sans text-body-sm font-semibold tracking-tight',
-          pathname === '/'
-            ? 'bg-gunmetal/30 text-titanium'
-            : 'text-ash hover:text-titanium',
-        )}
-      >
-        <Link href="/">Ana Sayfa</Link>
-      </Button>
+    <nav
+      aria-label="Ana Gezinim"
+      className="hidden min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto xl:flex"
+    >
+      {groups.map((group) => {
+        const Icon = getCategoryIcon(group.id);
+        const theme = getCategoryTheme(group.id);
+        const isActive =
+          pathname === group.href || pathname.startsWith(`${group.href}/`);
 
-      <DropdownMenu open={open} onOpenChange={setOpen}>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            size="sm"
+        return (
+          <div
+            key={group.id}
             className={cn(
-              'gap-2 font-sans text-body-sm font-semibold tracking-tight transition-colors',
-              isCalculatorPage
-                ? 'border border-hesaplamalarim-blue/40 bg-hesaplamalarim-blue/10 text-titanium'
-                : 'text-ash hover:text-titanium',
+              'inline-flex shrink-0 items-center rounded-lg border transition-all',
+              isActive
+                ? cn(theme.border, theme.bgSoft, 'shadow-sm')
+                : 'border-transparent hover:bg-gunmetal/25',
             )}
           >
-            <Calculator className="h-4 w-4 text-hesaplamalarim-blue" />
-            <span>Hesaplama Araçları</span>
-            <Badge
-              variant="outline"
-              className="ml-0.5 border-gunmetal/70 px-1.5 py-0 font-mono text-2xs text-hesaplamalarim-blue"
+            <Link
+              href={group.href}
+              className={cn(
+                'inline-flex items-center gap-1.5 whitespace-nowrap py-1.5 pl-2 pr-0.5 font-sans text-2xs font-semibold transition-colors',
+                isActive ? theme.text : 'text-ash hover:text-titanium',
+              )}
             >
-              33
-            </Badge>
-            <ChevronDown className="h-3.5 w-3.5 opacity-60 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-          </Button>
-        </DropdownMenuTrigger>
+              <Icon className={cn('h-3.5 w-3.5 shrink-0', theme.text)} />
+              <span>{group.shortTitle}</span>
+            </Link>
 
-        <DropdownMenuContent
-          align="center"
-          sideOffset={8}
-          className="w-[920px] max-w-[94vw] border-gunmetal/80 bg-obsidian/95 p-5 shadow-2xl backdrop-blur-md"
-        >
-          <div className="mb-4 flex items-center justify-between border-b border-gunmetal/50 pb-3">
-            <div>
-              <h3 className="font-display text-body-sm font-bold text-titanium">
-                Tüm Hesaplama Kategorileri & İşlemleri
-              </h3>
-              <p className="font-sans text-2xs text-ash">
-                Her hesaplama aracı kendi bağımsız SEO sayfasında çalışır.
-              </p>
-            </div>
-            <Badge
-              variant="default"
-              className="font-mono text-micro font-semibold"
-            >
-              7 Kategori • 33 Özel Sayfa
-            </Badge>
-          </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                aria-label={`${group.shortTitle} alt menüsü`}
+                className={cn(
+                  'inline-flex items-center justify-center rounded-r-lg py-1.5 pl-0.5 pr-1.5 text-ash transition-colors hover:text-titanium focus:outline-none',
+                  isActive && theme.text,
+                )}
+              >
+                <ChevronDown className="h-3.5 w-3.5 opacity-75" />
+              </DropdownMenuTrigger>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="space-y-4">{col1.map(renderGroup)}</div>
-            <div className="space-y-4">{col2.map(renderGroup)}</div>
-            <div className="space-y-4">{col3.map(renderGroup)}</div>
+              <DropdownMenuContent
+                align="start"
+                sideOffset={8}
+                className="w-64 border-gunmetal/80 bg-obsidian/95 p-1.5 shadow-xl backdrop-blur-md"
+              >
+                <DropdownMenuLabel className="px-2 py-1.5">
+                  <Link
+                    href={group.href}
+                    className={cn(
+                      'flex items-center gap-1.5 font-display text-caption font-bold hover:underline',
+                      theme.text,
+                    )}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    <span>{group.shortTitle} (Tümü)</span>
+                  </Link>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-gunmetal/50" />
+                {group.calculators.map((calc) => {
+                  const isSubActive = pathname === calc.href;
+                  return (
+                    <DropdownMenuItem
+                      key={calc.id}
+                      asChild
+                      className={cn(
+                        'cursor-pointer rounded-md px-2.5 py-1.5 font-sans text-compact',
+                        isSubActive
+                          ? cn(theme.bgSoft, theme.text, 'font-semibold')
+                          : 'text-titanium',
+                      )}
+                    >
+                      <Link href={calc.href}>{calc.shortTitle}</Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        );
+      })}
     </nav>
   );
 }

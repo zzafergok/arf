@@ -19,6 +19,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/core/sheet';
+import { getCategoryTheme } from '@/features/calculators/registry';
+import { cn } from '@/lib/utils';
 import { getCategoryIcon } from './constants';
 import type { NavCategoryGroup } from './types';
 
@@ -30,7 +32,7 @@ export function MobileNav({ groups }: MobileNavProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="md:hidden">
+    <div className="xl:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button
@@ -71,6 +73,7 @@ export function MobileNav({ groups }: MobileNavProps) {
           <Accordion type="multiple" className="w-full space-y-2">
             {groups.map((group) => {
               const Icon = getCategoryIcon(group.id);
+              const theme = getCategoryTheme(group.id);
               return (
                 <AccordionItem
                   key={group.id}
@@ -79,7 +82,7 @@ export function MobileNav({ groups }: MobileNavProps) {
                 >
                   <AccordionTrigger className="py-2.5 font-sans text-compact font-semibold text-titanium hover:no-underline">
                     <div className="flex items-center gap-2">
-                      <Icon className="h-4 w-4 text-hesaplamalarim-blue" />
+                      <Icon className={cn('h-4 w-4', theme.text)} />
                       <span>{group.shortTitle}</span>
                     </div>
                   </AccordionTrigger>
@@ -89,9 +92,12 @@ export function MobileNav({ groups }: MobileNavProps) {
                       <Link
                         href={group.href}
                         onClick={() => setOpen(false)}
-                        className="inline-block font-mono text-micro font-semibold text-hesaplamalarim-blue hover:underline"
+                        className={cn(
+                          'inline-block font-mono text-micro font-semibold hover:underline',
+                          theme.text,
+                        )}
                       >
-                        {group.shortTitle} Ana Sayfası →
+                        {group.shortTitle} Ekranını Aç →
                       </Link>
                     </div>
 
@@ -122,4 +128,3 @@ export function MobileNav({ groups }: MobileNavProps) {
     </div>
   );
 }
-

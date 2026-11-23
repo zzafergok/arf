@@ -1,21 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  ChevronRight,
-  Compass,
-  Share2,
-} from 'lucide-react';
+import { ArrowLeft, ChevronRight, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
-import { Badge } from '@/components/core/badge';
 import { Button } from '@/components/core/button';
 import { Card, CardContent } from '@/components/core/card';
 import { Link } from '@/components/core/link';
-import { useMounted } from '@/hooks/use-mounted';
-import { useGamificationStore } from '@/stores/use-gamification-store';
+import { cn } from '@/lib/utils';
 import {
   ALL_CALCULATORS,
   CALCULATOR_CATEGORIES,
@@ -23,7 +15,7 @@ import {
   getCategoryTheme,
 } from '../registry';
 import { DynamicCalculatorCard } from './dynamic-calculator-card';
-import { AnimatedGeometricBackdrop, GamificationHud } from './visuals';
+import { AnimatedGeometricBackdrop } from './visuals';
 
 interface CalculatorDetailScreenProps {
   calculatorId: string;
@@ -36,8 +28,6 @@ export function CalculatorDetailScreen({
   categoryId,
   calculator: initialCalculator,
 }: CalculatorDetailScreenProps) {
-  const mounted = useMounted();
-  const discoveredIds = useGamificationStore((s) => s.discoveredIds);
   const [copied, setCopied] = useState(false);
 
   const calculator =
@@ -54,8 +44,11 @@ export function CalculatorDetailScreen({
     CALCULATOR_CATEGORIES[0];
   const theme = getCategoryTheme(calculator.categoryId);
 
-  const siblingCalculators = ALL_CALCULATORS.filter(
-    (c) => c.categoryId === calculator.categoryId && c.id !== calculator.id,
+  const categoryTools = ALL_CALCULATORS.filter(
+    (c) => c.categoryId === calculator.categoryId,
+  );
+  const siblingCalculators = categoryTools.filter(
+    (c) => c.id !== calculator.id,
   );
 
   const handleCopyUrl = () => {
@@ -84,7 +77,7 @@ export function CalculatorDetailScreen({
             {categoryMeta.shortTitle}
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
-          <span className={`font-semibold ${theme.text}`}>
+          <span className={cn('font-semibold', theme.text)}>
             {calculator.shortTitle}
           </span>
         </div>
@@ -114,21 +107,50 @@ export function CalculatorDetailScreen({
         </div>
       </div>
 
-      {/* 2. Oyunlaştırma (Gamification) HUD Paneli */}
-      <GamificationHud />
+      {/* 2. Kategori İçi Alt Route Sekmeleri */}
+      <div className="flex flex-wrap items-center gap-2.5">
+        {categoryTools.map((tool) => {
+          const isActive = tool.id === calculator.id;
+
+          return (
+            <Button
+              key={tool.id}
+              asChild
+              variant={isActive ? 'default' : 'outline'}
+              className={cn(
+                'h-auto gap-2 rounded-xl px-4 py-2 font-sans text-compact font-semibold transition-all',
+                isActive
+                  ? cn(
+                      theme.buttonBg,
+                      'border-transparent text-primary-foreground shadow-md',
+                    )
+                  : cn(
+                      'border-gunmetal/70 bg-obsidian/90 text-titanium hover:bg-gunmetal/30',
+                      theme.hoverBorder,
+                    ),
+              )}
+            >
+              <Link href={`/${tool.categoryId}/${tool.id}`}>
+                <span>{tool.shortTitle}</span>
+              </Link>
+            </Button>
+          );
+        })}
+      </div>
 
       {/* 3. Ana Hesaplama Modülü */}
       <DynamicCalculatorCard calculator={calculator} showFullPageLink={false} />
 
-      {/* 4. Aynı Kategorideki Diğer Hesaplama Görevleri */}
+      {/* 4. Aynı Kategorideki Diğer Hesaplama Araçları */}
       <section className="space-y-4 pt-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-display text-heading-sm font-bold text-titanium">
-              {categoryMeta.shortTitle} Kategorisindeki Diğer Görevler
+              {categoryMeta.shortTitle} Kategorisindeki Diğer Araçlar
             </h2>
             <p className="font-sans text-caption font-normal text-ash">
-              Yeni araçları keşfederek +75 XP Kaşif Bonusu kazanabilirsin.
+              Aynı kategori altındaki diğer hesaplama araçlarına hızlı geçiş
+              yapın.
             </p>
           </div>
           <Button
@@ -142,61 +164,44 @@ export function CalculatorDetailScreen({
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {siblingCalculators.map((item) => {
-            const isDiscovered = mounted && discoveredIds.includes(item.id);
-            return (
-              <motion.div
-                key={item.id}
-                whileHover={{ y: -4, scale: 1.01 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+          {siblingCalculators.map((item) => (
+            <motion.div
+              key={item.id}
+              whileHover={{ y: -4, scale: 1.01 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            >
+              <Link
+                href={`/${item.categoryId}/${item.id}`}
+                className="block h-full"
               >
-                <Link
-                  href={`/${item.categoryId}/${item.id}`}
-                  className="block h-full"
+                <Card
+                  className={cn(
+                    'h-full border-gunmetal/70 bg-obsidian/90 transition-colors',
+                    theme.hoverBorder,
+                  )}
                 >
-                  <Card
-                    className={`h-full border-gunmetal/70 bg-obsidian/90 transition-colors ${theme.hoverBorder}`}
-                  >
-                    <CardContent className="flex h-full flex-col justify-between p-4">
-                      <div>
-                        <div className="mb-2 flex items-center justify-between gap-2">
-                          <Badge
-                            variant={isDiscovered ? 'default' : 'outline'}
-                            className="font-mono text-micro font-semibold"
-                          >
-                            {isDiscovered ? (
-                              <span className="inline-flex items-center gap-1">
-                                <CheckCircle2 className="h-3 w-3" />
-                                Keşfedildi
-                              </span>
-                            ) : (
-                              <span
-                                className={`inline-flex items-center gap-1 ${theme.text}`}
-                              >
-                                <Compass className="h-3 w-3" />
-                                +75 XP Keşif
-                              </span>
-                            )}
-                          </Badge>
-                        </div>
-                        <h3 className="font-display text-body-sm font-bold text-titanium">
-                          {item.title}
-                        </h3>
-                        <p className="mt-1 line-clamp-2 font-sans text-compact font-normal leading-relaxed text-ash">
-                          {item.description}
-                        </p>
-                      </div>
-                      <div
-                        className={`mt-3 font-mono text-2xs font-bold ${theme.text}`}
-                      >
-                        Hesaplama Sayfasına Git →
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </motion.div>
-            );
-          })}
+                  <CardContent className="flex h-full flex-col justify-between p-4">
+                    <div>
+                      <h3 className="font-display text-body-sm font-bold text-titanium">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1.5 line-clamp-2 font-sans text-compact font-normal leading-relaxed text-ash">
+                        {item.description}
+                      </p>
+                    </div>
+                    <div
+                      className={cn(
+                        'mt-3 font-mono text-2xs font-bold',
+                        theme.text,
+                      )}
+                    >
+                      Hesaplama Sayfasına Git →
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </section>
     </div>

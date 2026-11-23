@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ExternalLink, Star, Zap } from 'lucide-react';
+import { ExternalLink, Zap } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -20,8 +20,6 @@ import {
   SelectField,
   TextField,
 } from '@/components/forms';
-import { useMounted } from '@/hooks/use-mounted';
-import { useGamificationStore } from '@/stores/use-gamification-store';
 import { getCategoryTheme } from '../registry/category-theme';
 import {
   CalculatorDefinition,
@@ -40,11 +38,6 @@ export function DynamicCalculatorCard({
   calculator,
   showFullPageLink = false,
 }: DynamicCalculatorCardProps) {
-  const mounted = useMounted();
-  const recordCalculation = useGamificationStore((s) => s.recordCalculation);
-  const favoriteIds = useGamificationStore((s) => s.favoriteIds);
-  const toggleFavorite = useGamificationStore((s) => s.toggleFavorite);
-  const isFavorite = mounted && favoriteIds.includes(calculator.id);
   const theme = getCategoryTheme(calculator.categoryId);
 
   const defaultValues = useMemo(() => {
@@ -84,12 +77,6 @@ export function DynamicCalculatorCard({
     const computed = calculator.calculate(values);
     setResult(computed);
     setTick((t) => t + 1);
-    recordCalculation({
-      calcId: calculator.id,
-      categoryId: calculator.categoryId,
-      title: calculator.shortTitle,
-      primaryValue: computed.primaryValue,
-    });
   };
 
   return (
@@ -109,35 +96,19 @@ export function DynamicCalculatorCard({
                   {calculator.description}
                 </CardDescription>
               </div>
-              <div className="flex items-center gap-2">
+              {showFullPageLink && (
                 <Button
-                  type="button"
+                  asChild
                   size="sm"
                   variant="outline"
-                  onClick={() => toggleFavorite(calculator.id)}
-                  className={
-                    isFavorite
-                      ? 'border-hesaplamalarim-gold/60 bg-hesaplamalarim-gold/10 font-sans text-micro font-bold text-hesaplamalarim-gold'
-                      : 'border-gunmetal/80 font-sans text-micro font-medium text-ash'
-                  }
+                  className="font-sans text-micro font-semibold"
                 >
-                  <Star className="mr-1 h-3.5 w-3.5" />
-                  {isFavorite ? 'Favorilerde' : 'Favorile'}
+                  <Link href={`/${calculator.categoryId}/${calculator.id}`}>
+                    Özel Sayfa
+                    <ExternalLink className="ml-1.5 h-3 w-3" />
+                  </Link>
                 </Button>
-                {showFullPageLink && (
-                  <Button
-                    asChild
-                    size="sm"
-                    variant="outline"
-                    className="font-sans text-micro font-semibold"
-                  >
-                    <Link href={`/${calculator.categoryId}/${calculator.id}`}>
-                      Özel Sayfa
-                      <ExternalLink className="ml-1.5 h-3 w-3" />
-                    </Link>
-                  </Button>
-                )}
-              </div>
+              )}
             </div>
             {calculator.legalNote && (
               <p
@@ -209,7 +180,7 @@ export function DynamicCalculatorCard({
                   className={`w-full ${theme.buttonBg} font-sans text-body-sm font-bold text-primary-foreground shadow-md transition-transform active:scale-[0.99]`}
                 >
                   <Zap className="mr-1.5 h-4 w-4" />
-                  Hesapla ve +25 XP Kazan
+                  Hesapla
                 </Button>
               </form>
             </FormProvider>
