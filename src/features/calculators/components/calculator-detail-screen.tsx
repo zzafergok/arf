@@ -60,7 +60,7 @@ export function CalculatorDetailScreen({
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-[1600px] space-y-8 px-4 py-6 sm:px-6 lg:px-8">
+    <div lang="tr" className="relative mx-auto w-full max-w-[1600px] space-y-8 px-4 py-6 sm:px-6 lg:px-8">
       <AnimatedGeometricBackdrop />
 
       {/* 1. Üst Navigasyon & Paylaşım Çubuğu */}

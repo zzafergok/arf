@@ -1,11 +1,15 @@
-import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/metadata/site-metadata';
 
 import { CalculatorDetailScreen } from '@/features/calculators';
 
-export const metadata: Metadata = {
-  title: 'Araç MTV (Motorlu Taşıtlar Vergisi) Hesaplama | Hesaplamalarım',
-  description: 'Motor silindir hacmi ve araç yaş grubuna göre yıllık MTV ve Ocak/Temmuz taksit tutarları.',
-};
+export const metadata = buildPageMetadata(
+  {
+    path: '/gayrimenkul-hukuk/arac-mtv',
+    title: 'Araç MTV (Motorlu Taşıtlar Vergisi) Hesaplama',
+    description: 'Motor silindir hacmi ve araç yaş grubuna göre yıllık MTV ve Ocak/Temmuz taksit tutarları.',
+  },
+  'tr',
+);
 
 export default function AracMtvPage() {
   return (

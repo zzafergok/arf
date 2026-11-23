@@ -8,8 +8,8 @@ export function buildRootMetadata(
 ): Metadata {
   const title =
     locale === 'tr'
-      ? 'Hesaplamalarım | Güncel Finans ve Çalışma Hayatı Hesaplama Platformu'
-      : 'Hesaplamalarim | Financial & Employment Calculations Platform';
+      ? 'Arf | Güncel Finans ve Çalışma Hayatı Hesaplama Platformu'
+      : 'Arf | Financial & Employment Calculations Platform';
 
   return {
     metadataBase: siteMetadata.url,
@@ -83,7 +83,6 @@ export function buildRootMetadata(
         },
       ],
       locale,
-      alternateLocale: routing.locales.filter((item) => item !== locale),
     },
     twitter: {
       card: 'summary_large_image',

@@ -10,23 +10,15 @@ import {
 } from '@/lib/metadata/site-metadata';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const staticEntries: MetadataRoute.Sitemap = getIndexableRoutes().map(
     (route) => ({
       url: new URL(route.path, siteMetadata.url).toString(),
-      lastModified: now,
-      changeFrequency: route.path === '/' ? 'daily' : 'weekly',
-      priority: route.path === '/' ? 1 : 0.9,
     }),
   );
 
   const categoryEntries: MetadataRoute.Sitemap = CALCULATOR_CATEGORIES.map(
     (cat) => ({
       url: new URL(`/${cat.id}`, siteMetadata.url).toString(),
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.85,
     }),
   );
 
@@ -36,9 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         `/${calc.categoryId}/${calc.id}`,
         siteMetadata.url,
       ).toString(),
-      lastModified: now,
-      changeFrequency: 'weekly',
-      priority: 0.8,
     }),
   );
 

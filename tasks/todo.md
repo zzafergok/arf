@@ -22,7 +22,6 @@
 - `npm test`: 4 test dosyası, 30/30 test başarılı geçti.
 - `npm run build`: 47/47 sayfa hatasız derlendi.
 
-
 ## İnceleme ve Sonuç Özeti: Ali Kuşçu Esinli Logo Konsepti
 
 - Mevcut 2K görsel ve uygulamadaki logo kullanımları incelendi; küçük ölçekte detay kaybı riski belirlendi.
@@ -39,14 +38,12 @@
 - Kullanıcı referansındaki hacimli, kompakt ikon dili esas alınarak geometrik miras ve eşittir sembolünü birleştiren ayrı bir konsept hazırlandı; açık ve koyu tema görünümleri aynı görselde sunuldu.
 - Üretilen görsel incelendi; bağımsız üretim varlıkları ve uygulama entegrasyonu hazırlanmadı, küçük boyut ve gerçek tema testleri yapılmadı.
 
-
 ## İnceleme ve Sonuç Özeti: Onaylanan Logonun Uygulanması
 
 - Onaylanan konsept, iç içe geçen geometrik form ve eşittir işaretiyle açık ve koyu tema için vektörel olarak yeniden çizildi; gezinme ve kenar çubuğunda tema sınıfına bağlandı.
 - Favicon, Apple/Android ikonları, Safari maskesi, 2K marka görseli ve 1200×630 paylaşım görseli aynı işaretten üretildi; mevcut ikon yolları korundu.
 - `npm run type-check`, hedefli ESLint, `npm run metadata:check`, 30 test, `npm run build` ve `git diff --check` başarılı.
 - Görsel dosyalar incelendi; gerçek tarayıcıda tema geçişi, küçük boyut ve sosyal ağ paylaşım önizlemesi doğrulanmadı. Vektör uygulaması onaylanan görselin yeniden çizimidir.
-
 
 ## İnceleme ve Sonuç Özeti: Onaylanan Önizlemeye Sadık Logo
 
@@ -69,3 +66,19 @@
 
 - Eski koyu logo SVG dosyası onaylı koyu tema PNG görselini gömecek şekilde güncellendi; dosya bağımsızdır ancak vektörel değildir.
 - Gömülen görüntünün kaynak PNG ile eşitliği ve type-check kontrol edildi.
+
+## İnceleme ve Sonuç Özeti: Arf Marka Adı
+
+- Türkçe ve İngilizce marka metinleri, sayfa başlıkları, metadata, paket adı ve ilgili test Arf olarak güncellendi.
+- Mevcut onaylı logoyu kullanan yeni sosyal paylaşım görseli üretildi ve build çıktısı görsel olarak incelendi.
+- Type-check, 30 test, metadata kontrolü, production build ve hedefli ESLint başarılı.
+- Alan adı, destek e-postası ve kayıtlı tema tercihi anahtarı korundu. Canlı sosyal ağ paylaşımı ve tarayıcı kontrolü yapılmadı.
+
+## İnceleme ve Sonuç Özeti: Arama ve LLM Keşif Altyapısı
+
+- Public sayfalar için rota bazlı canonical, başlık, Open Graph ve Twitter metadata oluşturuldu; ana sayfaya WebSite JSON-LD eklendi.
+- Sitemap ve llms.txt gerçek public rotaları kapsayacak şekilde düzenlendi; yanıltıcı lastmod ve eski şablon bilgileri kaldırıldı. Mevcut bot politikası korundu.
+- Varsayılan dil Türkçe yapıldı; seçilen dile bağlı dinamik HTML dili korundu ve Türkçe hesaplayıcı içerikleri dil bilgisiyle işaretlendi.
+- Production URL ayarları ve canlı kontrol adımları README'ye eklendi. Gerçek production alan adı doğrulanmadı ve mevcut varsayılan korundu.
+- Type-check, lint, 36 test, metadata kontrolü, production build ve diff kontrolü başarılı. Yerel HTTP üzerinden ana sayfa, kategori, hesaplayıcı, dil çerezleri, sitemap, robots, llms.txt ve JSON-LD doğrulandı.
+- İlk dil testi tip hatası gerçek NextRequest ile giderildi; eşzamanlı build/type-check çıktısı çakışması bağımsız type-check tekrarıyla çözüldü. Canlı indeksleme, bot erişimi ve Search Console doğrulanmadı.

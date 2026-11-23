@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/metadata/site-metadata';
 import { notFound } from 'next/navigation';
 
 import {
@@ -6,10 +6,14 @@ import {
   CategoryDetailScreen,
 } from '@/features/calculators';
 
-export const metadata: Metadata = {
-  title: '7. Matematik, Geometri & Mühendislik | Hesaplamalarım',
-  description: 'Birim dönüştürücüler, geometrik alan/hacim hesaplama ve üniversite vize/final GPA not ortalaması.',
-};
+export const metadata = buildPageMetadata(
+  {
+    path: '/matematik-muhendislik',
+    title: '7. Matematik, Geometri & Mühendislik',
+    description: 'Birim dönüştürücüler, geometrik alan/hacim hesaplama ve üniversite vize/final GPA not ortalaması.',
+  },
+  'tr',
+);
 
 export default function MatematikMuhendislikCategoryPage() {
   const category = CALCULATOR_CATEGORIES.find((c) => c.id === 'matematik-muhendislik');
@@ -18,9 +22,11 @@ export default function MatematikMuhendislikCategoryPage() {
   }
 
   return (
-    <CategoryDetailScreen
-      categoryId="matematik-muhendislik"
-      category={category}
-    />
+    <div lang="tr">
+      <CategoryDetailScreen
+        categoryId="matematik-muhendislik"
+        category={category}
+      />
+    </div>
   );
 }

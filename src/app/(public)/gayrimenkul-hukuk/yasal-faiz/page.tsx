@@ -1,11 +1,15 @@
-import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/metadata/site-metadata';
 
 import { CalculatorDetailScreen } from '@/features/calculators';
 
-export const metadata: Metadata = {
-  title: 'Gecikme Zammı, Yasal Faiz & Temerrüt Faizi | Hesaplamalarım',
-  description: 'İcra, sözleşme veya vergi gecikmelerinde gün bazlı yasal faiz ve toplam borç hesabı.',
-};
+export const metadata = buildPageMetadata(
+  {
+    path: '/gayrimenkul-hukuk/yasal-faiz',
+    title: 'Gecikme Zammı, Yasal Faiz & Temerrüt Faizi',
+    description: 'İcra, sözleşme veya vergi gecikmelerinde gün bazlı yasal faiz ve toplam borç hesabı.',
+  },
+  'tr',
+);
 
 export default function YasalFaizPage() {
   return (

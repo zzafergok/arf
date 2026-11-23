@@ -4,15 +4,15 @@ const siteUrl =
   'https://hesaplamalarim.dev';
 
 export const siteMetadata = {
-  name: 'Hesaplamalarım',
-  legalName: 'Hesaplamalarım - Çevrimiçi Finans, Vergi ve Tazminat Hesaplama Platformu',
+  name: 'Arf',
+  legalName: 'Arf - Çevrimiçi Finans, Vergi ve Tazminat Hesaplama Platformu',
   description:
     '2026 yılı güncel yasal mevzuatına uygun kıdem tazminatı, ihbar tazminatı, brüt-net maaş ve bordro hesaplama araçları.',
   url: new URL(siteUrl),
-  creator: 'Hesaplamalarım',
-  publisher: 'Hesaplamalarım',
+  creator: 'Arf',
+  publisher: 'Arf',
   keywords: [
-    'Hesaplamalarım',
+    'Arf',
     'kıdem tazminatı hesaplama',
     'ihbar tazminatı hesaplama',
     'brütten nete maaş',
@@ -31,8 +31,8 @@ export const siteMetadata = {
     android512: '/assets/images/android-chrome-512x512.png',
     logo: '/assets/images/hesaplamalarim-logo-dark-approved.png',
     logoLight: '/assets/images/hesaplamalarim-logo-light-approved.png',
-    openGraph: '/assets/images/hesaplamalarim-open-graph.png',
+    openGraph: '/opengraph-image',
   },
   aiSummary:
-    'Hesaplamalarım is an online calculator suite offering up-to-date 2026 severance pay, notice indemnity, and salary/payroll calculations.',
+    'Arf is an online calculator suite offering up-to-date 2026 severance pay, notice indemnity, and salary/payroll calculations.',
 } as const;

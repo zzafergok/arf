@@ -1,4 +1,4 @@
-# Hesaplamalarım
+# Arf
 
 > Türk mevzuatına uygun, tip-güvenli, modern ve yüksek performanslı çevrimiçi finans ve çalışma hayatı hesaplama platformu.
 
@@ -27,7 +27,7 @@
 
 ## 💡 Hakkında
 
-**Hesaplamalarım**, Türkiye'deki güncel iş kanunu ve vergi mevzuatına (2026 yılı SGK tavan/taban ücretleri, gelir vergisi dilimleri, asgari ücret vergi istisnası ve damga vergisi oranları) tam uyumlu olarak çalışan yeni nesil bir hesaplama platformudur.
+**Arf**, Türkiye'deki güncel iş kanunu ve vergi mevzuatına (2026 yılı SGK tavan/taban ücretleri, gelir vergisi dilimleri, asgari ücret vergi istisnası ve damga vergisi oranları) tam uyumlu olarak çalışan yeni nesil bir hesaplama platformudur.
 
 Platform; bireysel kullanıcılar, muhasebeciler, insan kaynakları uzmanları ve yazılımcılar için karmaşık bordro ve tazminat formüllerini saniyeler içinde şeffaf, anlaşılır ve detaylı tablolara dönüştürür.
 
@@ -161,10 +161,7 @@ Proje, tasarım tutarlılığı ve kod kalitesi için sıkı standartlara tabidi
    npm install
    ```
 
-3. Çevre değişkenlerini hazırlayın:
-   ```bash
-   cp .env.example .env.local
-   ```
+3. İhtiyaç duyulan ortam değişkenlerini `.env.local` içinde tanımlayın. Yerel geliştirmede site URL'si `http://localhost:3000` olabilir; production ayarları için aşağıdaki bölüme bakın.
 
 4. Geliştirme sunucusunu başlatın:
    ```bash
@@ -172,6 +169,13 @@ Proje, tasarım tutarlılığı ve kod kalitesi için sıkı standartlara tabidi
    ```
 
 Tarayıcınızda `http://localhost:3000` adresini açarak uygulamayı görüntüleyebilirsiniz.
+
+### Production site adresi ve arama motorları
+
+- `NEXT_PUBLIC_SITE_URL` değerini gerçek, herkese açık HTTPS site kökü olarak **build ve çalıştırma ortamlarında aynı değerle** tanımlayın. Bu adres canonical, Open Graph, sitemap, robots.txt ve llms.txt çıktılarında kullanılır; yerel geliştirme adresini production'a taşımayın.
+- `NEXT_PUBLIC_SITE_URL` yoksa sunucu tarafında `SITE_URL`, o da yoksa mevcut `https://hesaplamalarim.dev` varsayılanı kullanılır. `NEXT_PUBLIC_` değerleri herkese açıktır; gizli bilgi içermemelidir.
+- Yayından sonra ana sayfa ve birkaç hesaplayıcı için canonical ve sosyal paylaşım metadata'sını, `/robots.txt`, `/sitemap.xml` ve `/llms.txt` adreslerini gerçek alan adında doğrulayın. Search Console'da mülkü doğrulayıp sitemap'i gönderin ve URL Inspection ile indeksleme durumunu kontrol edin.
+- OAI-SearchBot arama erişimi ve GPTBot eğitim erişimi ayrı politikalardır. CDN veya güvenlik duvarının izin verilen botları engellemediğini ayrıca kontrol edin. Bu ayarlar arama sonucunda görünmeyi garanti etmez.
 
 ---
 

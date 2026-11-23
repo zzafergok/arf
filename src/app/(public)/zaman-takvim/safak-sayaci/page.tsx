@@ -1,11 +1,15 @@
-import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/metadata/site-metadata';
 
 import { CalculatorDetailScreen } from '@/features/calculators';
 
-export const metadata: Metadata = {
-  title: 'Şafak & Askerlik Terhis Hesaplayıcı | Hesaplamalarım',
-  description: 'Sülüs (sevk) tarihi, askerlik türü ve yol iznine göre kalan şafak günü ve resmi terhis tarihi.',
-};
+export const metadata = buildPageMetadata(
+  {
+    path: '/zaman-takvim/safak-sayaci',
+    title: 'Şafak & Askerlik Terhis Hesaplayıcı',
+    description: 'Sülüs (sevk) tarihi, askerlik türü ve yol iznine göre kalan şafak günü ve resmi terhis tarihi.',
+  },
+  'tr',
+);
 
 export default function SafakSayaciPage() {
   return (

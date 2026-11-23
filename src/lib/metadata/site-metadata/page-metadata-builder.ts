@@ -65,9 +65,12 @@ export function buildPageMetadata(
   const localized = descriptor.locale[locale];
   const url = absoluteUrl(descriptor.path);
   const routeId = isMetadataRouteId(route) ? route : descriptor.path;
+  const title = localized.title.startsWith(`${siteMetadata.name} |`)
+    ? localized.title
+    : `${localized.title} | ${siteMetadata.name}`;
 
   return {
-    title: localized.title,
+    title: { absolute: title },
     description: localized.description,
     alternates: {
       canonical: descriptor.path,
@@ -75,7 +78,7 @@ export function buildPageMetadata(
     openGraph: {
       type: 'website',
       siteName: siteMetadata.name,
-      title: localized.title,
+      title,
       description: localized.description,
       url,
       images: [
@@ -86,12 +89,11 @@ export function buildPageMetadata(
           alt: `${siteMetadata.name} - ${localized.title}`,
         },
       ],
-      locale,
-      alternateLocale: routing.locales.filter((item) => item !== locale),
+      locale: locale === 'tr' ? 'tr_TR' : 'en_US',
     },
     twitter: {
       card: 'summary_large_image',
-      title: localized.title,
+      title,
       description: localized.description,
       images: [siteMetadata.assets.openGraph],
     },

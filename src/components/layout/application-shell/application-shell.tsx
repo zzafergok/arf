@@ -107,7 +107,7 @@ function ApplicationShellContent({
         </div>
 
         <ApplicationShellFooter placement="content">
-          {contentFooter ?? 'Hesaplamalarım © 2026'}
+          {contentFooter ?? 'Arf © 2026'}
         </ApplicationShellFooter>
       </SidebarInset>
     </>

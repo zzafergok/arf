@@ -1,13 +1,13 @@
 {
-  "name": "hesaplamalarim",
+  "name": "arf",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Hesaplamalarım - Türk mevzuatına uygun maaş, kıdem tazminatı, ihbar tazminatı, gelir vergisi ve finansal hesaplama platformu.",
-  "author": "Hesaplamalarım Team",
+  "description": "Arf - Türk mevzuatına uygun maaş, kıdem tazminatı, ihbar tazminatı, gelir vergisi ve finansal hesaplama platformu.",
+  "author": "Arf Team",
   "license": "MIT",
   "keywords": [
-    "hesaplamalarim",
+    "arf",
     "maas-hesaplama",
     "kidem-tazminati",
     "ihbar-tazminati",

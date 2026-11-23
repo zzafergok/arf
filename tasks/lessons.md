@@ -1,5 +1,7 @@
 # Proje Öğrenimleri ve Dersler (Lessons Learned)
 
+- **Dinamik dil:** HTML `lang` değeri kullanıcının seçtiği dil ile dinamik kalmalı; yalnızca seçilen dilden farklı ve henüz çevrilmemiş içerik bölümleri gerçek içerik diliyle ayrıca işaretlenmelidir.
+
 Bu dosya, kullanıcı geri bildirimleri, mimari denetimler ve geliştirme sürecinde edinilen tecrübelerin kaydıdır. Her oturumda ve geliştirmede bu kurallar göz önünde bulundurulmalıdır.
 
 ---

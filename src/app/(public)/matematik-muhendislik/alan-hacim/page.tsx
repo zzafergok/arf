@@ -1,11 +1,15 @@
-import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/metadata/site-metadata';
 
 import { CalculatorDetailScreen } from '@/features/calculators';
 
-export const metadata: Metadata = {
-  title: 'Geometrik Alan, Çevre & Hacim Hesaplama | Hesaplamalarım',
-  description: 'Daire, dikdörtgen, üçgen, silindir, küre ve koni için alan, çevre ve hacim hesaplamaları.',
-};
+export const metadata = buildPageMetadata(
+  {
+    path: '/matematik-muhendislik/alan-hacim',
+    title: 'Geometrik Alan, Çevre & Hacim Hesaplama',
+    description: 'Daire, dikdörtgen, üçgen, silindir, küre ve koni için alan, çevre ve hacim hesaplamaları.',
+  },
+  'tr',
+);
 
 export default function AlanHacimPage() {
   return (

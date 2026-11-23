@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/lib/metadata/site-metadata';
 import { notFound } from 'next/navigation';
 
 import {
@@ -6,10 +6,14 @@ import {
   CategoryDetailScreen,
 } from '@/features/calculators';
 
-export const metadata: Metadata = {
-  title: '5. Gayrimenkul, Araç & Hukuk | Hesaplamalarım',
-  description: 'TÜFE kira artış oranı, %4 tapu harcı, araç MTV, yasal/temerrüt faizi ve yasal miras paylaşımı simülatörü.',
-};
+export const metadata = buildPageMetadata(
+  {
+    path: '/gayrimenkul-hukuk',
+    title: '5. Gayrimenkul, Araç & Hukuk',
+    description: 'TÜFE kira artış oranı, %4 tapu harcı, araç MTV, yasal/temerrüt faizi ve yasal miras paylaşımı simülatörü.',
+  },
+  'tr',
+);
 
 export default function GayrimenkulHukukCategoryPage() {
   const category = CALCULATOR_CATEGORIES.find((c) => c.id === 'gayrimenkul-hukuk');
@@ -18,9 +22,11 @@ export default function GayrimenkulHukukCategoryPage() {
   }
 
   return (
-    <CategoryDetailScreen
-      categoryId="gayrimenkul-hukuk"
-      category={category}
-    />
+    <div lang="tr">
+      <CategoryDetailScreen
+        categoryId="gayrimenkul-hukuk"
+        category={category}
+      />
+    </div>
   );
 }
